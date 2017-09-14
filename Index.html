@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>视频解析测试</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="favicon.ico">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html,body{
+            height: 100%;
+        }
+        .mainbody{
+            padding:40px;
+        }
+        .footer{
+            position: absolute;
+            bottom: 0;
+            width:100%;
+            line-height:24px;
+            text-align: center;
+            background: #f5f7f9;
+        }
+        .video-wrapper{
+            width: 100%;
+            height: 500px;
+            margin:0 auto;
+            text-align: center;
+            margin-top:15px;
+            margin-left:15px;
+        }
+        #videoframe{
+            background: #000;
+        }
+        @media all and (max-width: 1024px){
+            .video-wrapper{
+                width: 600px;
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container mainbody">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12 column">
+            <div class="form-group">
+                <div class="col-md-10 col-sm-8 col-xs-9">
+                    <input type="text" class="form-control" id="videoUrl" placeholder="赋值视频网址解析即可观看" value="http://www.iqiyi.com/v_19rr8w4gh8.html"/>
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-3">
+                    <a href="javascript:;" class="btn btn-success" id="btnOk">开始解析</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 video-wrapper">
+            <iframe id="videoframe" width="100%" height="100%" allowtransparency="true" frameborder="0" scrolling="no" src=""></iframe>
+        </div>
+    </div>
+    <div class="row" style="padding-left: 15px;margin-top: 15px;">
+        <h4 class="text-left" style="padding-left: 15px;">快速入口</h4>
+        <div class="col-md-12 col-sm-12 col-xs-12 column">
+            <a href="http://www.iqiyi.com/" target="_blank" class="btn btn-success">爱奇艺</a>
+            <a href="http://v.youku.com" target="_blank" class="btn btn-success">优酷视频</a>
+            <a href="http://video.tudou.com/" target="_blank" class="btn btn-success">土豆视频</a>
+            <a href="http://www.mgtv.com/" target="_blank" class="btn btn-success">芒果TV</a>
+            <a href="http://www.le.com/" target="_blank" class="btn btn-success">乐视TV</a>
+            <a href="https://v.qq.com/"  target="_blank" class="btn btn-success">腾讯视频</a>
+            <a href="http://tv.sohu.com/"  target="_blank" class="btn btn-success">搜狐视频</a>
+            <a href="http://www.acfun.cn/" target="_blank" class="btn btn-success">ACFun</a>
+            <a href="http://www.bilibili.com/" target="_blank" class="btn btn-success">bilibili</a>
+            <a href="http://www.fun.tv/" target="_blank" class="btn btn-success">风行网</a>
+        </div>
+    </div>
+</div>
+
+
+
+<footer class="footer">
+    <p>© 2017 <a href="http://www.lhjbs.cn" target="_blank">vip视频解析</a></p>
+</footer>
+
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    (function(){
+    	var baseUrl = "http://api.baiyug.cn/vip/index.php?url=";
+	    $("#btnOk").click(function(){
+		    var temp = $("#videoUrl").val();
+            var cur = baseUrl + temp;
+            $("#videoframe").attr("src",cur);
+        });
+    })()
+</script>
+</body>
+
+</html>
