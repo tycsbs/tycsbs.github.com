@@ -3,162 +3,109 @@
 
 <head lang="en">
     <meta charset="UTF-8">
-    <title>白松的个人博客</title>
+    <title>视频解析测试</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="alternate icon" type="image/png" href="favicon.ico">
-    <link rel="stylesheet" href="css/amazeui.min.css"/>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .get {
-            background: #1E5B94;
-            color: #fff;
+        html,body{
+            height: 100%;
+        }
+        .mainbody{
+            padding:40px;
+        }
+        .footer{
+            position: absolute;
+            bottom: 0;
+            width:100%;
+            line-height:24px;
             text-align: center;
-            padding: 100px 0;
+            background: #f5f7f9;
         }
-
-        .get-title {
-            font-size: 200%;
-            border: 2px solid #fff;
-            padding: 20px;
-            display: inline-block;
-        }
-
-        .get-btn {
-            background: #fff;
-        }
-
-        .detail {
-            background: #fff;
-        }
-
-        .detail-h2 {
+        .video-wrapper{
+            width: 100%;
+            height: 500px;
+            margin:0 auto;
             text-align: center;
-            font-size: 150%;
-            margin: 40px 0;
+            margin-top:15px;
+            margin-left:15px;
         }
-
-        .detail-h3 {
-            color: #1f8dd6;
+        #videoframe{
+            background: #000;
         }
-
-        .detail-p {
-            color: #7f8c8d;
-        }
-
-        .detail-mb {
-            margin-bottom: 30px;
-        }
-
-        .hope {
-            background: #0bb59b;
-            padding: 50px 0;
-        }
-
-        .hope-img {
-            text-align: center;
-        }
-
-        .hope-hr {
-            border-color: #149C88;
-        }
-
-        .hope-title {
-            font-size: 140%;
-        }
-
-        .about {
-            background: #fff;
-            padding: 40px 0;
-            color: #7f8c8d;
-        }
-
-        .about-color {
-            color: #34495e;
-        }
-
-        .about-title {
-            font-size: 180%;
-            padding: 30px 0 50px 0;
-            text-align: center;
-        }
-
-        .footer p {
-            color: #7f8c8d;
-            margin: 0;
-            padding: 15px 0;
-            text-align: center;
-            background: #2d3e50;
+        @media all and (max-width: 768px){
+            .video-wrapper{
+                width: 100%;
+                height: 350px;
+                padding:0;
+            }
+            .mainbody{
+                padding:15px;
+            }
+            .btn-group a{
+                margin-top:8px;
+            }
+            .footer{
+                display: none;
+            }
         }
     </style>
 </head>
 
 <body>
-<header class="am-topbar am-topbar-fixed-top">
-    <div class="am-container">
-        <h1 class="am-topbar-brand">
-            <a href="#">白松的个人博客</a>
-        </h1>
-
-        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-secondary am-show-sm-only"
-                data-am-collapse="{target: '#collapse-head'}"><span class="am-sr-only">导航切换</span> <span
-                class="am-icon-bars"></span></button>
-
-        <div class="am-collapse am-topbar-collapse" id="collapse-head">
-            <ul class="am-nav am-nav-pills am-topbar-nav">
-                <li class="am-active"><a href="#">首页</a></li>
-                <li><a href="#">项目</a></li>
-            </ul>
+<div class="container mainbody">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12 column">
+            <div class="form-group">
+                <div class="col-md-10 col-sm-8 col-xs-9">
+                    <input type="text" class="form-control" id="videoUrl" placeholder="赋值视频网址解析即可观看" value="http://v.youku.com/v_show/id_XMzAwMTA5MTcwMA==.html?spm=a2hww.20023042.md223508.1~3!2~5~5~A"/>
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-3">
+                    <a href="javascript:;" class="btn btn-success" id="btnOk">开始解析</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 video-wrapper">
+            <iframe id="videoframe" width="100%" height="100%" allowtransparency="true" frameborder="0" scrolling="no" src=""></iframe>
         </div>
     </div>
-</header>
-
-<div class="get">
-    <div class="am-g">
-        <div class="am-u-lg-12">
-            <h1 class="get-title">HTML5、Javascript、ES6、Vue、webApp 走你！ </h1>
-
-            <p>
-                期待你的参与，共同打造一个积极向上的学习环境
-            </p>
-
-        </div>
-    </div>
-</div>
-
-<div class="detail" style="height:330px;"></div>
-<div class="hope">
-    <div class="am-g am-container">
-        <div class="am-u-lg-4 am-u-md-6 am-u-sm-12 hope-img">
-            <img src="picture/landing.png" alt="" data-am-scrollspy="{animation:'slide-left', repeat: false}">
-            <hr class="am-article-divider am-show-sm-only hope-hr">
-        </div>
-        <div class="am-u-lg-8 am-u-md-6 am-u-sm-12">
-            <h2 class="hope-title">同我们一起打造你的前端框架</h2>
-
-            <p>
-                在知识爆炸的年代，我们不愿成为知识的过客，拥抱开源文化，发挥社区的力量，获得自我提升。
-            </p>
+    <div class="row" style="padding-left: 15px;margin-top: 15px;">
+        <h4 class="text-left" style="padding-left: 15px;">快速入口</h4>
+        <div class="col-md-12 col-sm-12 col-xs-12 column btn-group">
+            <a href="http://www.iqiyi.com/" target="_blank" class="btn btn-success">爱奇艺</a>
+            <a href="http://v.youku.com" target="_blank" class="btn btn-success">优酷视频</a>
+            <a href="http://video.tudou.com/" target="_blank" class="btn btn-success">土豆视频</a>
+            <a href="http://www.mgtv.com/" target="_blank" class="btn btn-success">芒果TV</a>
+            <a href="http://www.le.com/" target="_blank" class="btn btn-success">乐视TV</a>
+            <a href="https://v.qq.com/"  target="_blank" class="btn btn-success">腾讯视频</a>
+            <a href="http://tv.sohu.com/"  target="_blank" class="btn btn-success">搜狐视频</a>
+            <a href="http://www.acfun.cn/" target="_blank" class="btn btn-success">ACFun</a>
+            <a href="http://www.bilibili.com/" target="_blank" class="btn btn-success">bilibili</a>
+            <a href="http://www.fun.tv/" target="_blank" class="btn btn-success">风行网</a>
         </div>
     </div>
 </div>
+
 
 
 <footer class="footer">
-    <p>© 2016 <a href="http://www.lhjbs.cn" target="_blank">白松的个人博客</a></p>
+    <p>© 2017 <a href="http://www.lhjbs.cn" target="_blank">vip视频解析</a></p>
 </footer>
 
-<!--[if lt IE 9]>
-<script src="js/jquery.min.js"></script>
-<script src="js/modernizr.js"></script>
-<script src="js/amazeui.ie8polyfill.min.js"></script>
-<![endif]-->
-
-<!--[if (gte IE 9)|!(IE)]><!-->
-<script src="js/jquery.min.js"></script>
-<!--<![endif]-->
-<script src="js/amazeui.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    (function(){
+    	var baseUrl = "http://api.baiyug.cn/vip/index.php?url=";
+	    $("#btnOk").click(function(){
+		    var temp = $("#videoUrl").val();
+            var cur = baseUrl + temp;
+            $("#videoframe").attr("src",cur);
+        });
+    })()
+</script>
 </body>
 
 </html>
