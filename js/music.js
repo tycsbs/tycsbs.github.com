@@ -188,17 +188,28 @@
                     var len = ret.length;
                     var lis = "";
                     for (var i = 0; i < len; i++) {
-                        // lis += `<li class="song-hook" data-singer="${ret[i].singer}" data-albumname="${ret[i].albumname}" data-songid="${ret[i].songid}" data-songname="${ret[i].songname}" data-mid="${ret[i].mid}" data-image="${ret[i].image}" data-duration="${ret[i].duration}" data-url="${ret[i].url}"><span class="music-name">${ret[i].songname}</span><span class="music-info">${ret[i].singer}</span></li>`
                         lis += `<li class="song-hook" data-index="${ret[i].curindex}"><span class="music-name">${ret[i].songsData.songname}</span><span class="music-info">${ret[i].songsData.singer}</span></li>`
 
                     }
                     musiclist = ret;
-                    $("#singer_detail_box").empty().html(avatar + '<div class="scroll-pages"><div class="scroll"><ul class="singer-muisic-list" id="music_list">' + lis + '</div></div></ul>')
+                    $("#singer_detail_box")
+                        .empty()
+                        .html(avatar + '<div class="scroll-pages"><div class="scroll"><ul class="singer-muisic-list" id="music_list">' + lis + '</div></div></ul><span class="closer" id="singer-detail-close"><i class="glyphicon glyphicon-log-out"></i></span>')
+                        .fadeIn();
                 })
         });
-        $("#singer_detail_box").on('click', '.song-hook', function () {
+        var $singerDetailBox = $("#singer_detail_box");
+        $singerDetailBox.on('click',"#singer-detail-close",function(){
+            $singerDetailBox.fadeOut();
+        });
+        $("#player-box-close").click(function(){
+            $('#play_box').fadeOut();
+        });
+        $singerDetailBox.on('click', '.song-hook', function () {
             cur_play_index = $(this).data("index");
             playMusic(cur_play_index);
+            $("#play_box").fadeIn();
+
         });
 
         var audio = document.querySelector("#audio");
@@ -297,10 +308,10 @@
         $("#songname").text(songname);
         $("#albumn").addClass('rotate-albumn');
         $("#audio").attr({
-            src: url,
-            autoplay: "autoplay"
+            src: url
         });
-        isPlaying = true
+        isPlaying = false;
+        $("#player").trigger('click')
     }
 
     function singerFilter(singArr) {

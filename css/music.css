@@ -3,25 +3,27 @@
 }
 .app-box{
     max-width: 450px;
+    height:691px;
     margin:0 auto;
+    overflow: hidden;
 }
 header {
-    height: 35px;
-    line-height: 35px;
+    height: 45px;
+    line-height: 45px;
     width: 100%;
-    background: #11ac64;
+    background: #096;
     color: #fff;
     text-align: center;
     font-weight: 700;
 }
 
 .main-body {
-    background: #f2f4f7;
     position: absolute;
-    top: 35px;
+    top: 45px;
     bottom: 0;
     width: 100%;
     max-width: 450px;
+    background: #fff;
     /*overflow: hidden;*/
 }
 
@@ -69,6 +71,8 @@ header {
     background: #12b5f3;
 }
 .page-wrapper{
+    position: absolute;
+    top:0;left:0;right:0;
     height: 656px;
     background: #aaa;
     overflow: hidden;
@@ -79,7 +83,7 @@ header {
 }
 .singer-list{
     margin-bottom:0;
-    padding:15px 10px;
+    padding:0 0 15px;
     background: #fff;
 }
 .singer-list li{
@@ -112,8 +116,12 @@ header {
     padding:0 15px;
 }
 .singer-detail{
+    display: none;
+    z-index: 5;
+    position: absolute;
+    top:0;left:0;right:0;
     height: 656px;
-    padding:20px 10px;
+    padding:0 0 20px;
     background: #fff;
     color: #096;
     overflow: hidden;
@@ -194,13 +202,40 @@ header {
 }
 .box-mask .avatar{
     width:60px;
-    height: 60px;
+    height: 58px;
     padding:5px;
 
 }
 .song-info{
     flex:1;
     padding-left:10px;
+}
+.player-box .closer,.singer-detail .closer{
+    position: absolute;
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    line-height:35px;
+    text-align: center;
+    right:15px;
+    top:15px;
+    font-size:24px;
+    color: #ccc;
+}
+.singer-detail .closer{
+    top:5px;
+}
+.closer:hover{
+    color: #fff;
+}
+.player-box{
+    display: none;
+    z-index: 10;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    height: 656px;
 }
 .player{
     width:60px;
@@ -213,8 +248,11 @@ header {
 .player:hover i{
     color: #096;
 }
+.box-mask{
+    height: 656px;
+}
 .box-mask .middle-wrapper{
-    height: 415px;
+    height: 485px;
     line-height:1.3;
     overflow: hidden;
 }
@@ -249,7 +287,7 @@ header {
 }
 .controller{
     display: flex;
-    padding:10px;
+    padding:20px;
 }
 .controller-hook{
     flex: 1;
@@ -287,6 +325,7 @@ header {
     text-align: center;
     color: #fff;
 }
+
 @keyframes rotates {
     from{transform: rotate(0deg)}
     to{transform: rotate(360deg)}
