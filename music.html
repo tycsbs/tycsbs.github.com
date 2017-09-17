@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>music api</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <link rel="alternate icon" type="image/png" href="favicon.ico">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/music.css">
+</head>
+<body>
+<div class="container">
+    <div class="app-box">
+        <header>
+            <p class="title">My Music</p>
+        </header>
+        <section class="main-body">
+            <!--<div class="scroll">
+                <ul class="group-list" id="music_category">
+
+                </ul>
+            </div>-->
+            <section class="page-wrapper">
+                <div class="scroll">
+                    <ul class="singer-list" id="singer_list">
+
+                    </ul>
+                </div>
+            </section>
+
+
+            <div class="singer-detail" id="singer_detail_box">
+                <!-- <div class="avatar-box" style="background-image:url('//y.gtimg.cn/music/photo_new/T001R300x300M000002J4UUk29y8BY.jpg?max_age=2592000')"></div>
+                 <ul class="singer-muisic-list" id="music_list">
+
+                 </ul>-->
+            </div>
+
+            <div class="player-box" id="play_box">
+                <div class="box-mask">
+                    <!--<div class="blur-box"></div>-->
+                    <div class="top-wrapper">
+                        <div class="avatar" id="song_avatar"></div>
+                        <div class="song-info" id="song_info">
+
+                        </div>
+                        <!--<div class="player" id="player">
+                            <i class="glyphicon glyphicon-pause"></i>
+                        </div>-->
+                    </div>
+                    <div class="middle-wrapper">
+                        <h5 class="songname" id="songname"></h5>
+                        <div class="lyr-box">
+                            <div id="albumn" class="albumn "></div>
+                        </div>
+                    </div>
+                    <div class="bottom-wrapper">
+                        <audio src="" id="audio"></audio>
+                        <div class="progress-wrapper">
+                            <span class="cur_time" id="cur_time">0:00</span>
+                            <span class="slider">
+                                <span class="slider-track" id="sliderTrack"></span>
+                            </span>
+                            <span id="end_time" class="end_time">3:22</span>
+                        </div>
+                        <div class="controller">
+                            <span class="controller-hook" id="ramdom"><i class="glyphicon glyphicon-random"></i></span>
+                            <span class="controller-hook" id="prve"><i
+                                    class="glyphicon glyphicon-step-backward"></i></span>
+                            <span class="controller-hook" id="player"><i class="glyphicon glyphicon-pause"></i></span>
+                            <span class="controller-hook" id="next"><i
+                                    class="glyphicon glyphicon-step-forward"></i></span>
+                            <span class="controller-hook"><i class="glyphicon glyphicon-align-justify"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="js/music.js"></script>
+
+</body>
+</html>
