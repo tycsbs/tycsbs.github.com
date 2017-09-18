@@ -5,7 +5,7 @@
     position: relative;
     max-width: 450px;
     height:691px;
-    margin:100px auto;
+    margin:0 auto;
     overflow: hidden;
     box-shadow: 3px 3px 13px rgba(0,0,0,.6);
 }
@@ -357,5 +357,10 @@ header {
 @media all and (max-width: 768px) {
     .container {
         padding: 0;
+    }
+}
+@media all and (min-width: 1024px) {
+    .app-box{
+        margin:40px auto;
     }
 }

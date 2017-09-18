@@ -294,7 +294,6 @@
 					$li.addClass('active').siblings().removeClass();
 					/*滚动*/
 					var pos = $li.offset().top;
-					console.log(pos);
 					if (pos > 350) {
 						loc += 35;
 						$("#lyric_box").animate({scrollTop: loc})
@@ -355,15 +354,17 @@
 					.slice(5)
 					.map(str => {
 						let t = str.split(']')
-						return {[t[0]]: [[t[0]], t[1]]}
+                        return {[t[0]]: [[t[0]], t[1]]}
 					})
 					.reduce((a, b) => {
-						return {...a, ...b}
+						// var ret = {...a, ...b}
+                        return  Object.assign({},a,b);
 					});
 				var lyric_text = "";
 				for (var key in lyric) {
 					lyric_text += `<li data-time="${lyric[key][0][0]}">${lyric[key][1]}</li>`
 				}
+				console.log("lyric",lyric)
 				$("#lyric_box").html(lyric_text)
 			})
 		isPlaying = false;
