@@ -289,8 +289,9 @@
 
 			for (var i = 0; i < lyric_lis.length; i++) {
 				var $li = $(lyric_lis[i]);
-				var $litime = $li.data("time").substring(0, 5);
-				if ($litime == formatTime) {
+				var $litime = $li.data("time");
+
+				if ($litime.indexOf(formatTime) > -1) {
 					$li.addClass('active').siblings().removeClass();
 					/*滚动*/
 					var pos = $li.offset().top;
@@ -364,7 +365,6 @@
 				for (var key in lyric) {
 					lyric_text += `<li data-time="${lyric[key][0][0]}">${lyric[key][1]}</li>`
 				}
-				console.log("lyric",lyric)
 				$("#lyric_box").html(lyric_text)
 			})
 		isPlaying = false;
