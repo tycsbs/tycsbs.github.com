@@ -6,7 +6,6 @@
 		inCharset: 'utf-8',
 		outCharset: 'utf-8',
 		notice: 0
-
 	};
 	var musiclist = [];
 	var isPlaying;
@@ -225,7 +224,8 @@
 			} else {
 				audio.play();
 				$(_this).children('i').removeClass('glyphicon-play-circle').addClass('glyphicon-pause')
-				$("#albumn").addClass('rotate-albumn')
+				$("#albumn").addClass('rotate-albumn');
+				$("#lyric_box").animate({scrollTop: 0})
 			}
 			isPlaying = !isPlaying;
 		});
