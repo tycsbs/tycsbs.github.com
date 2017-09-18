@@ -11,46 +11,54 @@
     <link rel="alternate icon" type="image/png" href="favicon.ico">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        html,body{
+        html, body {
             height: 100%;
         }
-        .mainbody{
-            padding:40px;
+
+        .mainbody {
+            padding: 40px;
         }
-        .footer{
+
+        .footer {
             position: absolute;
             bottom: 0;
-            width:100%;
-            line-height:24px;
+            width: 100%;
+            line-height: 24px;
             text-align: center;
             background: #f5f7f9;
         }
-        .video-wrapper{
+
+        .video-wrapper {
             width: 100%;
             height: 500px;
-            margin:0 auto;
+            margin: 0 auto;
             text-align: center;
-            margin-top:15px;
-            margin-left:15px;
+            margin-top: 15px;
+            margin-left: 15px;
         }
-        #videoframe{
+
+        #videoframe {
             background: #000;
         }
-        @media all and (max-width: 768px){
 
-            .video-wrapper{
+        @media all and (max-width: 768px) {
+
+            .video-wrapper {
                 width: 100%;
                 height: 350px;
-                padding:0;
+                padding: 0;
             }
-            .mainbody{
-                padding:15px;
+
+            .mainbody {
+                padding: 15px;
             }
-            .btn-group a{
-                margin-top:8px;
+
+            .btn-group a {
+                margin-top: 8px;
             }
-            .footer{
-                display:none;
+
+            .footer {
+                display: none;
             }
         }
     </style>
@@ -62,7 +70,8 @@
         <div class="col-md-12 col-sm-12 col-xs-12 column">
             <div class="form-group">
                 <div class="col-md-10 col-sm-8 col-xs-9">
-                    <input type="text" class="form-control" id="videoUrl" placeholder="赋值视频网址解析即可观看" value="http://v.youku.com/v_show/id_XMzAwMTA5MTcwMA==.html?spm=a2hww.20023042.md223508.1~3!2~5~5~A"/>
+                    <input type="text" class="form-control" id="videoUrl" placeholder="复制视频网址解析即可观看"
+                           value="http://v.youku.com/v_show/id_XMzAwMTA5MTcwMA==.html?spm=a2hww.20023042.md223508.1~3!2~5~5~A"/>
                 </div>
                 <div class="col-md-2 col-sm-4 col-xs-3">
                     <a href="javascript:;" class="btn btn-success" id="btnOk">开始解析</a>
@@ -70,7 +79,8 @@
             </div>
         </div>
         <div class="col-md-12 col-sm-12 col-xs-12 video-wrapper">
-            <iframe id="videoframe" width="100%" height="100%" allowtransparency="true" frameborder="0" scrolling="no" src=""></iframe>
+            <iframe id="videoframe" width="100%" height="100%" allowtransparency="true" frameborder="0" scrolling="no"
+                    src=""></iframe>
         </div>
     </div>
     <div class="row" style="padding-left: 15px;margin-top: 15px;">
@@ -81,8 +91,8 @@
             <a href="http://video.tudou.com/" target="_blank" class="btn btn-success">土豆视频</a>
             <a href="http://www.mgtv.com/" target="_blank" class="btn btn-success">芒果TV</a>
             <a href="http://www.le.com/" target="_blank" class="btn btn-success">乐视TV</a>
-            <a href="https://v.qq.com/"  target="_blank" class="btn btn-success">腾讯视频</a>
-            <a href="http://tv.sohu.com/"  target="_blank" class="btn btn-success">搜狐视频</a>
+            <a href="https://v.qq.com/" target="_blank" class="btn btn-success">腾讯视频</a>
+            <a href="http://tv.sohu.com/" target="_blank" class="btn btn-success">搜狐视频</a>
             <a href="http://www.acfun.cn/" target="_blank" class="btn btn-success">ACFun</a>
             <a href="http://www.bilibili.com/" target="_blank" class="btn btn-success">bilibili</a>
             <a href="http://www.fun.tv/" target="_blank" class="btn btn-success">风行网</a>
@@ -91,21 +101,21 @@
 </div>
 
 
-
 <footer class="footer">
     <p>© 2017 <a href="http://www.lhjbs.cn" target="_blank">vip视频解析</a></p>
 </footer>
 
 <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <script>
-    (function(){
-    	var baseUrl = "http://api.baiyug.cn/vip/index.php?url=";
-	    $("#btnOk").click(function(){
-		    var temp = $("#videoUrl").val();
-            var cur = baseUrl + temp;
-            $("#videoframe").attr("src",cur);
-        });
-    })()
+	(function () {
+		//viedeo解析
+		var baseUrl = "http://api.baiyug.cn/vip/index.php?url=";
+		$("#btnOk").click(function () {
+			var temp = $("#videoUrl").val();
+			var cur = baseUrl + temp;
+			$("#videoframe").attr("src", cur);
+		});
+	})()
 </script>
 </body>
 
