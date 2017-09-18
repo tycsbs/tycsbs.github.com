@@ -2,10 +2,12 @@
     font-family: "Microsoft YaHei", sans-serif;
 }
 .app-box{
+    position: relative;
     max-width: 450px;
     height:691px;
-    margin:0 auto;
+    margin:100px auto;
     overflow: hidden;
+    box-shadow: 3px 3px 13px rgba(0,0,0,.6);
 }
 header {
     height: 45px;
@@ -70,12 +72,17 @@ header {
     box-shadow: 0 0 3px rgba(250,250,250,.7),0 0 6px rgba(30,30,30,.6);
     background: #12b5f3;
 }
-.page-wrapper{
+.page-wrapper,.lyric-wrapper{
     position: absolute;
     top:0;left:0;right:0;
     height: 656px;
     background: #aaa;
     overflow: hidden;
+}
+.lyric-wrapper{
+    display: none;
+    background: rgba(0,0,0,.5);
+    z-index: 11;
 }
 .scroll{
     height: 100%;
@@ -324,6 +331,23 @@ header {
     width: 80px;
     text-align: center;
     color: #fff;
+}
+.lyr-wrapper{
+    width: 100%;
+    height:100%;
+    padding:40px 0;
+    margin-bottom:0;
+    background: rgba(0,0,0,.6);
+    overflow-y: auto;
+
+}
+.lyr-wrapper li{
+    line-height:2.2;
+    text-align: center;
+    color: #ccc;
+}
+.lyr-wrapper li.active{
+    color: #096;
 }
 
 @keyframes rotates {
