@@ -12,6 +12,7 @@
 	var cur_play_index;
 	var currenttime;
 	var total_time;
+    var loc = 0;
 	$(function () {
 		var music_config = {
 				jsonpCallback: 'MusicJsonCallback',
@@ -226,6 +227,7 @@
 				$(_this).children('i').removeClass('glyphicon-play-circle').addClass('glyphicon-pause')
 				$("#albumn").addClass('rotate-albumn');
 				$("#lyric_box").animate({scrollTop: 0})
+				loc = 0;
 			}
 			isPlaying = !isPlaying;
 		});
@@ -274,7 +276,7 @@
 		}, 1000);
 		/*播放进度*/
 		var progress;
-		var loc = 0;
+
 		audio.addEventListener("timeupdate", function () {
 			currenttime = this.currentTime;
 			progress = ((currenttime / total_time).toFixed(4)) * 100;

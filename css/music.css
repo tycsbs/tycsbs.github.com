@@ -72,18 +72,19 @@ header {
     box-shadow: 0 0 3px rgba(250,250,250,.7),0 0 6px rgba(30,30,30,.6);
     background: #12b5f3;
 }
-.page-wrapper,.lyric-wrapper{
-    position: absolute;
-    top:0;left:0;right:0;
-    height: 656px;
-    background: #aaa;
-    overflow: hidden;
-}
 .lyric-wrapper{
     display: none;
     background: rgba(0,0,0,.5);
     z-index: 11;
 }
+.page-wrapper,.lyric-wrapper{
+    position: absolute;
+    top:0;left:0;right:0;
+    height: 656px;
+    /*background: #aaa;*/
+    overflow: hidden;
+}
+
 .scroll{
     height: 100%;
     overflow-y: auto;
