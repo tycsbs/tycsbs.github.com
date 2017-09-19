@@ -12,7 +12,7 @@
 	var cur_play_index;
 	var currenttime;
 	var total_time;
-    var loc = 0;
+	var loc = 0;
 	$(function () {
 		var music_config = {
 				jsonpCallback: 'MusicJsonCallback',
@@ -276,7 +276,7 @@
 		}, 1000);
 		/*播放进度*/
 		var progress;
-
+		var prevLine = 0;
 		audio.addEventListener("timeupdate", function () {
 			currenttime = this.currentTime;
 			progress = ((currenttime / total_time).toFixed(4)) * 100;
@@ -286,23 +286,20 @@
 			$("#sliderTrack").css("width", progress + '%');
 
 			/*歌词高亮*/
-
-			var lyric_lis = $("#lyric_box").children('li');
-
-			for (var i = 0; i < lyric_lis.length; i++) {
-				var $li = $(lyric_lis[i]);
-				var $litime = $li.data("time");
-
-				if ($litime.indexOf(formatTime) > -1) {
+			$lyricBox = $("#lyric_box");
+			var lyric_lis = $lyricBox.children('li');
+			if (lyric_lis.length) {
+				var cur_line = findCurNum(currenttime, lyric_lis) ;
+				if(cur_line > prevLine){
+					var $li = $(lyric_lis[cur_line]);
 					$li.addClass('active').siblings().removeClass();
-					/*滚动*/
 					var pos = $li.offset().top;
 					if (pos > 350) {
 						loc += 35;
-						$("#lyric_box").animate({scrollTop: loc})
+						$lyricBox.animate({scrollTop: loc})
 					}
-					break;
 				}
+				prevLine = cur_line
 			}
 		});
 		$("#lyricBtn,.lyr-box").click(function (e) {
@@ -313,6 +310,18 @@
 			$(this).fadeOut()
 		})
 	});
+
+	function findCurNum(time, lines) {
+		var len = lines.length;
+		time = time * 1000;
+		for (var i = 0; i < len; i++) {
+			var linetime = $(lines[i]).data("time")
+			if (time <= +linetime) {
+				return i - 1;
+			}
+		}
+		return lines.length - 1;
+	}
 
 	function format(time) {
 		time = time | 0;
@@ -356,21 +365,32 @@
 					.split('[')
 					.slice(5)
 					.map(str => {
-						let t = str.split(']')
-                        return {[t[0]]: [[t[0]], t[1]]}
+						let t = str.split(']');
+						return {[t[0]]: [[calcTime(t[0])], t[1]]}
 					})
 					.reduce((a, b) => {
 						// var ret = {...a, ...b}
-                        return  Object.assign({},a,b);
+						return Object.assign({}, a, b);
 					});
 				var lyric_text = "";
-				for (var key in lyric) {
-					lyric_text += `<li data-time="${lyric[key][0][0]}">${lyric[key][1]}</li>`
+				var lyric_key = "";
+				for (var k in lyric) {
+					lyric_key = lyric[k][0][0] || 0;
+					lyric_text += `<li data-time="${lyric_key}">${lyric[k][1]}</li>`
+				}
+				/*让滚动条额外增半屏高度*/
+				for (var i = 0; i < 10; i++) {
+					lyric_text += '<li></li>'
 				}
 				$("#lyric_box").html(lyric_text)
-			})
+			});
 		isPlaying = false;
 		$("#player").trigger('click')
+	}
+
+	function calcTime(time) {
+		var temp = time.split(":");
+		return temp[0] * 60 * 1000 + temp[1] * 1000
 	}
 
 	function singerFilter(singArr) {
