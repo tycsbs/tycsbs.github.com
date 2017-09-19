@@ -86,19 +86,23 @@ header {
 }
 .singer-list-hash{
     position: absolute;
+    /*z-index: 20;*/
     right:0;
-    top:30px;
+    top:50px;
     padding:0;
     margin-bottom:0;
-    background: rgba(0,0,0,.6);
+    border-radius: 3px 0 0 5px;
     color: #fff;
 }
 .singer-list-hash li{
     display: block;
     list-style: none;
-    padding:3px 5px;
-    line-height:18px;
+    padding:2px 5px;
+    line-height:14px;
+    font-size:12px;
     text-align: center;
+    background: rgba(0,0,0,.6);
+    cursor: pointer;
 }
 .singer-list-hash li:hover{
     color: #096;
@@ -106,7 +110,6 @@ header {
 .singer-list-hash li:nth-child(odd){
     background: rgba(0,0,0,.4);
 }
-
 .scroll{
     height: 100%;
     overflow-y: auto;
@@ -115,6 +118,7 @@ header {
     margin-bottom:0;
     padding:0 0 15px;
     background: #fff;
+    overflow-y: auto;
 }
 .singer-list li{
     list-style: none;
@@ -124,6 +128,7 @@ header {
 }
 .singer-list li.singer-category{
     background: #dedede;
+    font-size:12px;
     padding-left:10px;
     font-weight:700;
     margin:0;
@@ -403,6 +408,11 @@ header {
 @media all and (max-width: 768px) {
     .container {
         padding: 0;
+    }
+    .singer-list-hash li{
+        font-size:9px;
+        padding:2px;
+        line-height:12px;
     }
 }
 @media all and (min-width: 1024px) {

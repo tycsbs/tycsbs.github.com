@@ -121,9 +121,10 @@
 				for (var i in maplist) {
 					var curItems = maplist[i].items;
 					var temp_name = maplist[i].title;
-					singerStr += `<li class="singer-category">${maplist[i].title}</li>`;
-					var temp_hash = temp_name == HOTNAME ? "热" : temp_name;
-					strHash += `<li class="singer-category">${temp_hash}</li>`;
+                    var temp_hash = temp_name == HOTNAME ? "热" : temp_name;
+                    var temp_hash_id = temp_name == HOTNAME ? "hot" : temp_name;
+					singerStr += `<li id="hash_${temp_hash_id}" class="singer-category">${maplist[i].title}</li>`;
+					strHash += `<li data-id="#hash_${temp_hash_id}">${temp_hash}</li>`;
 					for (var j in curItems) {
 						singerStr += `<li data-id=${curItems[j].id} data-singer=${curItems[j].name} class="singer-select-hook">
                     <img class="avatar" src=${curItems[j].avatar}>
@@ -155,7 +156,12 @@
 		 $("#music_category").html(temp)
 		 });
 		 */
-
+		Dom.$singerListHash.on('click','li',function(e){
+			e.preventDefault();
+			var id = $(this).data("id");
+			var scrollH = ($(id).offset().top | 0 ) - Dom.$singerList.offset().top + Dom.$singerList.scrollTop();
+            $("#scroll_list").animate({scrollTop:scrollH});
+		})
 		Dom.$singerList.on('click', '.singer-select-hook', function () {
 
 			var sid = $(this).data("id");
