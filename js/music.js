@@ -289,13 +289,13 @@
 			$lyricBox = $("#lyric_box");
 			var lyric_lis = $lyricBox.children('li');
 			if (lyric_lis.length) {
-				var cur_line = findCurNum(currenttime, lyric_lis) ;
-				if(cur_line > prevLine){
+				var cur_line = findCurNum(currenttime, lyric_lis);
+				if (cur_line > prevLine) {
 					var $li = $(lyric_lis[cur_line]);
 					$li.addClass('active').siblings().removeClass();
 					var pos = $li.offset().top;
 					if (pos > 350) {
-						loc += 35;
+						loc = (cur_line - 9) * 35;
 						$lyricBox.animate({scrollTop: loc})
 					}
 				}
