@@ -84,6 +84,28 @@ header {
     /*background: #aaa;*/
     overflow: hidden;
 }
+.singer-list-hash{
+    position: absolute;
+    right:0;
+    top:30px;
+    padding:0;
+    margin-bottom:0;
+    background: rgba(0,0,0,.6);
+    color: #fff;
+}
+.singer-list-hash li{
+    display: block;
+    list-style: none;
+    padding:3px 5px;
+    line-height:18px;
+    text-align: center;
+}
+.singer-list-hash li:hover{
+    color: #096;
+}
+.singer-list-hash li:nth-child(odd){
+    background: rgba(0,0,0,.4);
+}
 
 .scroll{
     height: 100%;
@@ -340,7 +362,6 @@ header {
     margin-bottom:0;
     background: rgba(0,0,0,.6);
     overflow-y: auto;
-
 }
 .lyr-wrapper li{
     line-height:2.2;
@@ -350,7 +371,31 @@ header {
 .lyr-wrapper li.active{
     color: #096;
 }
+.miniplayer{
+    display: none;
+    position: absolute;
+    width: 100%;
+    z-index: 15;
+    bottom:0;
+}
+.mini-player-wrapper{
+    display: flex;
+    color: #fff;
+    height: 60px;
+    background: rgba(0,0,0,.8);
+}
+.mini-player-wrapper > .mini-player-avatar,.mini-player-wrapper >.player{
+    width: 60px;
+    height:60px;
+}
+.mini-player-wrapper > .mini-song-info{
+    flex:1;
+    padding-left:10px;
 
+}
+.pd-5{
+    padding:0 5px;
+}
 @keyframes rotates {
     from{transform: rotate(0deg)}
     to{transform: rotate(360deg)}

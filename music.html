@@ -28,6 +28,9 @@
 
                     </ul>
                 </div>
+                <ul class="singer-list-hash" id="singer_hash">
+
+                </ul>
             </section>
 
 
@@ -60,20 +63,21 @@
                     <div class="bottom-wrapper">
                         <audio src="" id="audio"></audio>
                         <div class="progress-wrapper">
-                            <span class="cur_time" id="cur_time">0:00</span>
+                            <span class="cur_time" id="cur_time"></span>
                             <span class="slider">
                                 <span class="slider-track" id="sliderTrack"></span>
                             </span>
-                            <span id="end_time" class="end_time">3:22</span>
+                            <span id="end_time" class="end_time"></span>
                         </div>
                         <div class="controller">
                             <span class="controller-hook" id="ramdom"><i class="glyphicon glyphicon-random"></i></span>
                             <span class="controller-hook" id="prve"><i
                                     class="glyphicon glyphicon-step-backward"></i></span>
-                            <span class="controller-hook" id="player"><i class="glyphicon glyphicon-pause"></i></span>
+                            <span class="controller-hook player-kook" id="player"><i class="glyphicon glyphicon-pause"></i></span>
                             <span class="controller-hook" id="next"><i
                                     class="glyphicon glyphicon-step-forward"></i></span>
-                            <span class="controller-hook" id="lyricBtn"><i class="glyphicon glyphicon-align-justify"></i></span>
+                            <span class="controller-hook" id="lyricBtn"><i
+                                    class="glyphicon glyphicon-align-justify"></i></span>
                         </div>
                     </div>
                 </div>
@@ -86,7 +90,19 @@
                     </ul>
                 </div>
             </section>
-
+            <!--mini player-->
+            <div class="miniplayer" id="miniWrapper">
+                <div class="mini-player-wrapper">
+                    <div class="mini-player-avatar" id="mini_avatar"></div>
+                    <div class="mini-song-info" id="mini_song_info">
+                       <!-- <h5>告白气球</h5>
+                        <h6>周杰伦</h6>-->
+                    </div>
+                    <div class="player player-hook" id="miniPlayer">
+                        <i class="glyphicon glyphicon-pause"></i>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 </div>
