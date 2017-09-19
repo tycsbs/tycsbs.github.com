@@ -7,81 +7,74 @@
 		outCharset: 'utf-8',
 		notice: 0
 	};
+	var lyric_url = 'https://api.darlin.me/music/lyric/';
+	var music_config = {
+			jsonpCallback: 'MusicJsonCallback',
+			loginUin: 0,
+			hostUin: 0,
+			format: 'jsonp',
+			platform: 'yqq',
+			needNewCode: 0
+		},
+		music_url = 'https://szc.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_tag_conf.fcg';
+	var config_data = Object.assign({}, basic_config, music_config);
+
+	var singer_config = {
+			jsonpCallback: 'GetSingerListCallback',
+			channel: 'singer',
+			page: 'list',
+			key: 'all_all_all',
+			pagesize: 100,
+			pagenum: 1,
+			loginUin: 0,
+			hostUin: 0,
+			format: 'jsonp',
+			platform: 'yqq',
+			needNewCode: 0
+		},
+		singer_url = 'https://c.y.qq.com/v8/fcg-bin/v8.fcg';
+	var config_singer_data = Object.assign(basic_config, singer_config);
+	var HOTNAME = "热门";
+
+	var singer_detail_config = {
+		jsonpCallback: 'MusicJsonCallbacksinger_track',
+		loginUin: 0,
+		hostUin: 0,
+		format: 'jsonp',
+		platform: 'yqq',
+		needNewCode: 0,
+		// singermid:002J4UUk29y8BY
+		order: 'listen',
+		begin: 0,
+		num: 30,
+		songstatus: 1
+	};
+	var singer_detail_url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg';
+	var config_singer_detail_data = Object.assign({}, basic_config, singer_detail_config);
+	// var lyric_url_api = 'https://api.darlin.me/music/lyric/202773258';
 	var musiclist = [];
 	var isPlaying;
 	var cur_play_index;
 	var currenttime;
 	var total_time;
 	var loc = 0;
+	var Dom = {
+		$singerDetailBox: $("#singer_detail_box"),
+		$lyricWrapper: $("#lyric_wrapper"),
+		$lyricBox: $("#lyric_box"),
+		$miniWrapper: $('#miniWrapper'),
+		$playBox: $('#play_box'),
+		$playboxCloser: $("#player-box-close"),
+		$singerList: $("#singer_list"),
+		$singerListHash:$("#singer_hash"),
+		$player: $("#player"),
+		$playerBtn: $(".player-hook")
+	};
 	$(function () {
-		var music_config = {
-				jsonpCallback: 'MusicJsonCallback',
-				loginUin: 0,
-				hostUin: 0,
-				format: 'jsonp',
-				platform: 'yqq',
-				needNewCode: 0
-			},
-			music_url = 'https://szc.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_tag_conf.fcg';
-		var config_data = Object.assign({}, basic_config, music_config);
-
-		var singer_config = {
-				jsonpCallback: 'GetSingerListCallback',
-				channel: 'singer',
-				page: 'list',
-				key: 'all_all_all',
-				pagesize: 100,
-				pagenum: 1,
-				loginUin: 0,
-				hostUin: 0,
-				format: 'jsonp',
-				platform: 'yqq',
-				needNewCode: 0
-			},
-			singer_url = 'https://c.y.qq.com/v8/fcg-bin/v8.fcg';
-		var config_singer_data = Object.assign(basic_config, singer_config);
-		var HOTNAME = "热门";
-
-		var singer_detail_config = {
-			jsonpCallback: 'MusicJsonCallbacksinger_track',
-			loginUin: 0,
-			hostUin: 0,
-			format: 'jsonp',
-			platform: 'yqq',
-			needNewCode: 0,
-			// singermid:002J4UUk29y8BY
-			order: 'listen',
-			begin: 0,
-			num: 30,
-			songstatus: 1
-		};
-		var singer_detail_url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg';
-		var config_singer_detail_data = Object.assign({}, basic_config, singer_detail_config);
-		var lyric_config = {
-			g_tk: 5381,
-			jsonpCallback: 'MusicJsonCallback_lrc',
-			loginUin: 0,
-			hostUin: 0,
-			callback: 'MusicJsonCallback_lrc',
-			format: 'jsonp',
-			platform: 'yqq',
-			needNewCode: 0,
-			pcachetime: +new Date(),
-			inCharset: 'utf8',
-			outCharset: 'utf-8',
-			notice: 0
-
-		};
-		var lyric_url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg';
-		var lyric_url_api = 'https://api.darlin.me/music/lyric/202773258';
-		// var config_lyric_data = Object.assign({}, basic_config, lyric_config);
-		// var config_lyric_data = $.extend({}, basic_config, lyric_config);
-
-
+		var audio = document.querySelector("#audio");
 		getSingerList(singer_url, config_singer_data)
 			.then(function (data) {
 				var singer = data.data.list;
-
 				var map = {
 					hot: {
 						title: HOTNAME,
@@ -108,7 +101,6 @@
 						name: item.Fsinger_name,
 						avatar: `//y.gtimg.cn/music/photo_new/T001R150x150M000${item.Fsinger_mid}.jpg?max_age=2592000`
 					});
-					// map[key].items.push(new singer(item.Fsinger_mid,item.Fsinger_name))
 				});
 				//解决map有序列表处理
 				var hot = [], ret = [];
@@ -125,9 +117,13 @@
 				});
 				var maplist = hot.concat(ret);
 				var singerStr = "";
+				var strHash = "";
 				for (var i in maplist) {
 					var curItems = maplist[i].items;
-					singerStr += `<li class="singer-category">${maplist[i].title}</li>`
+					var temp_name = maplist[i].title;
+					singerStr += `<li class="singer-category">${maplist[i].title}</li>`;
+					var temp_hash = temp_name == HOTNAME ? "热" : temp_name;
+					strHash += `<li class="singer-category">${temp_hash}</li>`;
 					for (var j in curItems) {
 						singerStr += `<li data-id=${curItems[j].id} data-singer=${curItems[j].name} class="singer-select-hook">
                     <img class="avatar" src=${curItems[j].avatar}>
@@ -135,10 +131,9 @@
                     </li>`
 					}
 				}
-				$("#singer_list").html(singerStr)
+				Dom.$singerListHash.html(strHash);
+				Dom.$singerList.html(singerStr)
 			});
-
-
 		/* getMusicList(music_url, config_data)
 		 .then(function (data) {
 		 var datas = data.data.categories;
@@ -161,7 +156,7 @@
 		 });
 		 */
 
-		$("#singer_list").on('click', '.singer-select-hook', function () {
+		Dom.$singerList.on('click', '.singer-select-hook', function () {
 
 			var sid = $(this).data("id");
 			var singer = $(this).data("singer");
@@ -193,80 +188,33 @@
 
 					}
 					musiclist = ret;
-					$("#singer_detail_box")
+					Dom.$singerDetailBox
 						.empty()
 						.html(avatar + '<div class="scroll-pages"><div class="scroll"><ul class="singer-muisic-list" id="music_list">' + lis + '</div></div></ul><span class="closer" id="singer-detail-close"><i class="glyphicon glyphicon-log-out"></i></span>')
 						.fadeIn();
 				})
 		});
-		var $singerDetailBox = $("#singer_detail_box");
-		$singerDetailBox.on('click', "#singer-detail-close", function (e) {
-			e.preventDefault();
-			$singerDetailBox.fadeOut();
-		});
-		$("#player-box-close").click(function (e) {
-			e.preventDefault();
-			$('#play_box').fadeOut();
-		});
-		$singerDetailBox.on('click', '.song-hook', function () {
+
+
+		Dom.$singerDetailBox.on('click', '.song-hook', function () {
 			cur_play_index = $(this).data("index");
 			playMusic(cur_play_index);
-			$("#play_box").fadeIn();
+			Dom.$playBox.fadeIn();
+			Dom.$miniWrapper.fadeOut();
 
 		});
-
-		var audio = document.querySelector("#audio");
-		$("#player").on('click', function () {
-			var _this = this;
-			if (isPlaying) {
-				audio.pause();
-				$(_this).children('i').removeClass('glyphicon-pause').addClass('glyphicon-play-circle')
-				$("#albumn").removeClass('rotate-albumn')
-			} else {
-				audio.play();
-				$(_this).children('i').removeClass('glyphicon-play-circle').addClass('glyphicon-pause')
-				$("#albumn").addClass('rotate-albumn');
-				$("#lyric_box").animate({scrollTop: 0})
-				loc = 0;
-			}
-			isPlaying = !isPlaying;
+		Dom.$singerDetailBox.on('click', "#singer-detail-close", function (e) {
+			e.preventDefault();
+			Dom.$singerDetailBox.fadeOut();
 		});
-		$("#prve").on('click', function () {
 
-			if (cur_play_index == 0) {
-				cur_play_index = musiclist.length
-			}
-			cur_play_index--;
-			playMusic(cur_play_index);
-			$("#player").children('i').addClass('glyphicon-pause').removeClass('glyphicon-play-circle');
-
-		});
-		$("#next").on('click', function () {
-			if (cur_play_index == musiclist.length - 1) {
-				cur_play_index = -1
-			}
-			cur_play_index++;
-			playMusic(cur_play_index);
-			$("#player").children('i').addClass('glyphicon-pause').removeClass('glyphicon-play-circle');
-
-		});
-		$("#ramdom").on('click', function () {
-			var temp_max = musiclist.length - 1;
-			var ramdom_cur = Math.ceil(Math.random() * temp_max)
-			playMusic(ramdom_cur);
-			$("#player").children('i').addClass('glyphicon-pause').removeClass('glyphicon-play-circle');
-
-		});
 		/*监听是音乐播放器的状态*/
 		setInterval(function () {
 			if (isPlaying) {
 				if (audio.paused) {
-					// if(!playIcon.hasClass('glyphicon-pause')){
-					$("#player").children('i').removeClass('glyphicon-pause').addClass('glyphicon-play-circle');
-					// }
-					// if($("#albumn").hasClass('rotate-albumn')){
+					Dom.$player.children('i').removeClass('glyphicon-pause').addClass('glyphicon-play-circle');
 					$("#albumn").removeClass('rotate-albumn');
-					// }
+
 					isPlaying = false;
 				}
 			}
@@ -280,43 +228,112 @@
 		audio.addEventListener("timeupdate", function () {
 			currenttime = this.currentTime;
 			progress = ((currenttime / total_time).toFixed(4)) * 100;
-			var formatTime = format(currenttime)
+			var formatTime = format(currenttime);
 			$("#cur_time").text(formatTime);
 			$("#end_time").text(format(total_time));
 			$("#sliderTrack").css("width", progress + '%');
 
 			/*歌词高亮*/
-			$lyricBox = $("#lyric_box");
-			var lyric_lis = $lyricBox.children('li');
+			var lyric_lis = Dom.$lyricBox.children('li');
 			if (lyric_lis.length) {
 				var cur_line = findCurNum(currenttime, lyric_lis);
-				if (cur_line > prevLine) {
+				if (cur_line > prevLine && Dom.$lyricWrapper.css("display") != 'none') {
 					var $li = $(lyric_lis[cur_line]);
 					$li.addClass('active').siblings().removeClass();
 					var pos = $li.offset().top;
-					if (pos > 350) {
+					if (pos > 385) {
 						loc = (cur_line - 9) * 35;
-						$lyricBox.animate({scrollTop: loc})
+						Dom.$lyricBox.animate({scrollTop: loc})
 					}
 				}
 				prevLine = cur_line
 			}
 		});
+
+		/*播放器控制板事件*/
+		$("#player,#miniPlayer").on('click', function () {
+			var _this = this;
+			if (isPlaying) {
+				audio.pause();
+				Dom.$playerBtn.children('i').removeClass('glyphicon-pause').addClass('glyphicon-play-circle');
+				$("#albumn").removeClass('rotate-albumn')
+			} else {
+				audio.play();
+				Dom.$playerBtn.children('i').removeClass('glyphicon-play-circle').addClass('glyphicon-pause');
+				$("#albumn").addClass('rotate-albumn');
+				Dom.$lyricBox.animate({scrollTop: 0});
+				loc = 0;
+			}
+			isPlaying = !isPlaying;
+		});
+		$("#prve").on('click', function () {
+
+			if (cur_play_index == 0) {
+				cur_play_index = musiclist.length
+			}
+			cur_play_index--;
+			playMusic(cur_play_index);
+			Dom.$player.children('i').addClass('glyphicon-pause').removeClass('glyphicon-play-circle');
+
+		});
+		$("#next").on('click', function () {
+			if (cur_play_index == musiclist.length - 1) {
+				cur_play_index = -1
+			}
+			cur_play_index++;
+			playMusic(cur_play_index);
+			Dom.$player.children('i').addClass('glyphicon-pause').removeClass('glyphicon-play-circle');
+
+		});
+		$("#ramdom").on('click', function () {
+			var temp_max = musiclist.length - 1;
+			var ramdom_cur = Math.ceil(Math.random() * temp_max);
+			playMusic(ramdom_cur);
+			Dom.$player.children('i').addClass('glyphicon-pause').removeClass('glyphicon-play-circle');
+
+		});
 		$("#lyricBtn,.lyr-box").click(function (e) {
 			e.preventDefault();
-			$("#lyric_wrapper").fadeIn()
+			Dom.$lyricWrapper.fadeIn();
+			Dom.$miniWrapper.fadeIn();
 		});
-		$("#lyric_wrapper").click(function () {
-			$(this).fadeOut()
-		})
+		/*歌词面板*/
+		Dom.$lyricWrapper.click(function (e) {
+			e.preventDefault();
+			$(this).fadeOut();
+			Dom.$miniWrapper.fadeOut();
+			return false
+		});
+		/*播放器头像点击事件*/
+		$("#song_avatar").click(function (e) {
+			e.preventDefault();
+			Dom.$playboxCloser.trigger('click')
+		});
+		$("#mini_avatar").click(function (e) {
+			e.preventDefault();
+			if (Dom.$lyricWrapper.css("display") != "none") {
+				Dom.$lyricWrapper.trigger('click')
+			} else {
+				Dom.$miniWrapper.fadeOut();
+				Dom.$playBox.fadeIn();
+			}
+
+		});
+		/*关闭按钮*/
+		Dom.$playboxCloser.click(function (e) {
+			e.preventDefault();
+			Dom.$playBox.fadeOut();
+			Dom.$miniWrapper.fadeIn();
+			Dom.$singerDetailBox.fadeIn();
+		});
 	});
 
 	function findCurNum(time, lines) {
 		var len = lines.length;
 		time = time * 1000;
 		for (var i = 0; i < len; i++) {
-			var linetime = $(lines[i]).data("time")
-			if (time <= +linetime) {
+			var linetime = $(lines[i]).data("time");
+			if (linetime && time <= +linetime) {
 				return i - 1;
 			}
 		}
@@ -336,10 +353,7 @@
 		return minite + ":" + second;
 	}
 
-	var lyric_url = 'https://api.darlin.me/music/lyric/'
-
 	function playMusic(index) {
-
 		var cur_play_info = musiclist[index].songsData;
 		var singer = cur_play_info.singer;
 		var albumname = cur_play_info.albumname;
@@ -348,11 +362,11 @@
 		var image = cur_play_info.image;
 		var songid = cur_play_info.songid;
 		total_time = cur_play_info.duration;
-		$("#song_avatar,#play_box,#albumn").css({
+		$("#song_avatar,#play_box,#albumn,#mini_avatar").css({
 			background: 'url(' + image + ') center center',
 			backgroundSize: 'cover'
 		});
-		$("#song_info").html(`<h5>${singer}</h5><h6>${albumname}</h6>`);
+		$("#song_info,#mini_song_info").html(`<h5>${singer}</h5><h6>${songname }<span class="pd-5">/</span>${albumname}</h6>`);
 		$("#songname").text(songname);
 		$("#albumn").addClass('rotate-albumn');
 		$("#audio").attr({
@@ -382,10 +396,10 @@
 				for (var i = 0; i < 10; i++) {
 					lyric_text += '<li></li>'
 				}
-				$("#lyric_box").html(lyric_text)
+				Dom.$lyricBox.html(lyric_text)
 			});
 		isPlaying = false;
-		$("#player").trigger('click')
+		Dom.$player.trigger('click')
 	}
 
 	function calcTime(time) {
