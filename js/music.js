@@ -231,6 +231,7 @@
 		/*播放进度*/
 		var progress;
 		var prevLine = 0;
+		var prevLyric = "";
 		audio.addEventListener("timeupdate", function () {
 			currenttime = this.currentTime;
 			progress = ((currenttime / total_time).toFixed(4)) * 100;
@@ -244,14 +245,20 @@
 			/*歌词高亮*/
 			var lyric_lis = Dom.$lyricBox.children('li');
 			if (lyric_lis.length) {
+				var liHeight = lyric_lis[0].clientHeight;
 				var cur_line = findCurNum(currenttime, lyric_lis);
-				if (cur_line > prevLine && Dom.$lyricWrapper.css("display") != 'none') {
-					var $li = $(lyric_lis[cur_line]);
-					$li.addClass('active').siblings().removeClass();
-					var pos = $li.offset().top;
-					if (pos > 385) {
-						loc = (cur_line - 9) * 35;
-						Dom.$lyricBox.animate({scrollTop: loc})
+				var li = lyric_lis[cur_line];
+				var $li = $(li);
+				var thisLyric = $li.text().toString();
+				if (thisLyric.length > 1 &&  thisLyric != prevLyric ) {
+					if (cur_line > prevLine) {
+						$li.addClass('active').siblings().removeClass();
+						prevLyric = thisLyric;
+						var pos = li.offsetTop;
+						if (Dom.$lyricWrapper.css("display") != 'none' && cur_line > 9) {
+							loc = (cur_line - 9) * liHeight;
+							Dom.$lyricBox.animate({scrollTop: loc})
+						}
 					}
 				}
 				prevLine = cur_line
@@ -281,6 +288,7 @@
 			}
 			cur_play_index--;
 			playMusic(cur_play_index);
+			Dom.$lyricBox.animate({scrollTop: 0});
 			Dom.$player.children('i').addClass('glyphicon-pause').removeClass('glyphicon-play-circle');
 
 		});
@@ -290,6 +298,7 @@
 			}
 			cur_play_index++;
 			playMusic(cur_play_index);
+			Dom.$lyricBox.animate({scrollTop: 0});
 			Dom.$player.children('i').addClass('glyphicon-pause').removeClass('glyphicon-play-circle');
 
 		});
@@ -297,6 +306,7 @@
 			var temp_max = musiclist.length - 1;
 			var ramdom_cur = Math.ceil(Math.random() * temp_max);
 			playMusic(ramdom_cur);
+			Dom.$lyricBox.animate({scrollTop: 0});
 			Dom.$player.children('i').addClass('glyphicon-pause').removeClass('glyphicon-play-circle');
 
 		});
@@ -335,7 +345,6 @@
 			Dom.$singerDetailBox.fadeIn();
 		});
 	});
-
 	function findCurNum(time, lines) {
 		var len = lines.length;
 		time = time * 1000;
