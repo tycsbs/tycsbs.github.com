@@ -66,7 +66,7 @@
 		$playBox: $('#play_box'),
 		$playboxCloser: $("#player-box-close"),
 		$singerList: $("#singer_list"),
-		$singerListHash:$("#singer_hash"),
+		$singerListHash: $("#singer_hash"),
 		$player: $("#player"),
 		$playerBtn: $(".player-hook")
 	};
@@ -121,8 +121,8 @@
 				for (var i in maplist) {
 					var curItems = maplist[i].items;
 					var temp_name = maplist[i].title;
-                    var temp_hash = temp_name == HOTNAME ? "热" : temp_name;
-                    var temp_hash_id = temp_name == HOTNAME ? "hot" : temp_name;
+					var temp_hash = temp_name == HOTNAME ? "热" : temp_name;
+					var temp_hash_id = temp_name == HOTNAME ? "hot" : temp_name;
 					singerStr += `<li id="hash_${temp_hash_id}" class="singer-category">${maplist[i].title}</li>`;
 					strHash += `<li data-id="#hash_${temp_hash_id}">${temp_hash}</li>`;
 					for (var j in curItems) {
@@ -156,11 +156,11 @@
 		 $("#music_category").html(temp)
 		 });
 		 */
-		Dom.$singerListHash.on('click','li',function(e){
+		Dom.$singerListHash.on('click', 'li', function (e) {
 			e.preventDefault();
 			var id = $(this).data("id");
 			var scrollH = ($(id).offset().top | 0 ) - Dom.$singerList.offset().top + Dom.$singerList.scrollTop();
-            $("#scroll_list").animate({scrollTop:scrollH});
+			$("#scroll_list").animate({scrollTop: scrollH});
 		})
 		Dom.$singerList.on('click', '.singer-select-hook', function () {
 
@@ -234,6 +234,8 @@
 		audio.addEventListener("timeupdate", function () {
 			currenttime = this.currentTime;
 			progress = ((currenttime / total_time).toFixed(4)) * 100;
+			var circleProgress = (100 - progress) * Math.PI;
+			$("#circle_progress").attr("stroke-dashoffset", circleProgress)
 			var formatTime = format(currenttime);
 			$("#cur_time").text(formatTime);
 			$("#end_time").text(format(total_time));
@@ -261,11 +263,11 @@
 			var _this = this;
 			if (isPlaying) {
 				audio.pause();
-				Dom.$playerBtn.children('i').removeClass('glyphicon-pause').addClass('glyphicon-play-circle');
+				Dom.$playerBtn.children('i').removeClass('glyphicon-pause').addClass('glyphicon-play');
 				$("#albumn").removeClass('rotate-albumn')
 			} else {
 				audio.play();
-				Dom.$playerBtn.children('i').removeClass('glyphicon-play-circle').addClass('glyphicon-pause');
+				Dom.$playerBtn.children('i').removeClass('glyphicon-play').addClass('glyphicon-pause');
 				$("#albumn").addClass('rotate-albumn');
 				Dom.$lyricBox.animate({scrollTop: 0});
 				loc = 0;
