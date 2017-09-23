@@ -271,11 +271,11 @@
 			if (isPlaying) {
 				audio.pause();
 				Dom.$playerBtn.children('i').removeClass('glyphicon-pause').addClass('glyphicon-play');
-				$("#albumn").removeClass('rotate-albumn')
+				$("#albumn,#mini_avatar").addClass('pause-albumn')
 			} else {
 				audio.play();
 				Dom.$playerBtn.children('i').removeClass('glyphicon-play').addClass('glyphicon-pause');
-				$("#albumn").addClass('rotate-albumn');
+				$("#albumn,#mini_avatar").removeClass('pause-albumn');
 				Dom.$lyricBox.animate({scrollTop: 0});
 				loc = 0;
 			}
@@ -385,7 +385,7 @@
 		});
 		$("#song_info,#mini_song_info").html(`<h5>${singer}</h5><h6>${songname }<span class="pd-5">/</span>${albumname}</h6>`);
 		$("#songname").text(songname);
-		$("#albumn").addClass('rotate-albumn');
+		$("#albumn,#mini_avatar").addClass('rotate-albumn');
 		$("#audio").attr({
 			src: url
 		});

@@ -308,7 +308,6 @@ header {
     line-height:60px;
     font-size:30px;
     text-align: center;
-    border-left:1px solid #666;
 }
 .player:hover i{
     color: #096;
@@ -349,6 +348,9 @@ header {
 }
 .rotate-albumn{
     animation: rotates 25s linear infinite;
+}
+.pause-albumn{
+    animation-play-state: paused;
 }
 .controller{
     display: flex;
@@ -422,13 +424,17 @@ header {
     background: rgba(0,0,0,.8);
 }
 .mini-player-wrapper > .mini-player-avatar,.mini-player-wrapper >.player{
-    width: 60px;
-    height:60px;
+    width: 50px;
+    height:50px;
+    margin:5px;
+}
+.mini-player-wrapper > .mini-player-avatar{
+    border-radius: 50%;
 }
 .mini-player-wrapper > .mini-song-info{
     flex:1;
     padding-left:10px;
-
+    border-right:1px solid #666;
 }
 .pd-5{
     padding:0 5px;
