@@ -26,7 +26,7 @@ header {
     bottom: 0;
     width: 100%;
     max-width: 450px;
-    background: #fff;
+    background: #333;
     /*overflow: hidden;*/
 }
 
@@ -75,7 +75,7 @@ header {
 }
 .lyric-wrapper{
     display: none;
-    background: rgba(0,0,0,.5);
+    background: rgba(0,0,0,.8);
     z-index: 11;
 }
 .page-wrapper,.lyric-wrapper{
@@ -93,12 +93,12 @@ header {
     padding:0;
     margin-bottom:0;
     border-radius: 3px 0 0 5px;
-    color: #fff;
+    color: #e9cd12;
 }
 .svg-progress{
     position: absolute;
-    top:0;
-    right:0;
+    top: 3px;
+    right: 1px;
     padding-top: 5px;
     width:60px;
 }
@@ -143,39 +143,41 @@ header {
 .scroll{
     height: 100%;
     overflow-y: auto;
+    background: rgba(0,0,0,.3);
 }
 .singer-list{
-    margin-bottom:0;
-    padding:0 0 15px;
-    background: #fff;
+    margin-bottom: 0;
+    padding: 0 0 15px;
+    background: #333;
     overflow-y: auto;
 }
 .singer-list li{
     list-style: none;
-    padding:5px;
-    background: #f3f6f8;
-    margin-bottom:8px;
+    padding: 4px;
+    background: rgba(0,0,0,.8);
+    border-bottom: 1px solid #555;
 }
 .singer-list li.singer-category{
-    background: #dedede;
-    font-size:12px;
-    padding-left:10px;
-    font-weight:700;
-    margin:0;
-
+    background: #333;
+    color: #e1e30f;
+    font-size: 12px;
+    padding-left: 10px;
+    font-weight: 700;
+    margin: 0;
+    border: none;
 }
 .singer-list li.singer-category:hover{
-    background: #dedede;
+    background: #333;
 }
 .singer-list li:hover{
-    background: #ccc;
+    background: #222;
 }
 .singer-list li .avatar{
     height: 50px;
     padding:5px;
 }
 .singer-name{
-    font-size:14px;
+    font-size:12px;
     font-weight:600;
     color: #096;
     padding:0 15px;
@@ -196,29 +198,40 @@ header {
     padding-top:15px;
     padding-bottom:15px;
     height: 396px;
+    background: #333;
     overflow: hidden;
 }
 
 
 .singer-muisic-list{
     padding-left:0;
-    background: #fff;
 }
 .singer-muisic-list li{
+    display: flex;
     list-style: none;
-    padding:8px;
+    padding:2px 8px 0;
     cursor: pointer;
-    background: #f3f6f8;
     margin-bottom:5px;
+    font-size:12px;
+    box-shadow: 0 0 2px #666;
+}
+.singer-muisic-list li .item-left{
+    flex: 1;
+    padding-left:4px;
+}
+.singer-muisic-list li .item-right{
+    width: 60px;
+    text-align: center;
+    line-height:54px;
 }
 .singer-muisic-list li:hover{
-    background: #ccc;
+    background: #111;
 }
 .singer-muisic-list li .music-name{
     display: block;
     font-weight:700;
-    line-height:30px;
-    font-size:14px;
+    line-height:25px;
+    font-size:12px;
     color: #00c487;
 }
 .avatar-box{
@@ -240,7 +253,7 @@ header {
 }
 .singer-muisic-list li .music-info{
     display: block;
-    line-height:25px;
+    line-height:20px;
     font-size:12px;
     color: #096;
 }
@@ -371,32 +384,57 @@ header {
 .bottom-wrapper .progress-wrapper{
     display: flex;
     line-height:2;
+    color: #EBC70F;
 }
 .slider{
+    position: relative;
     flex:1;
-    height: 8px;
-    margin-top: 10px;
-    border-radius: 6px;
-    background: #aaa;
+    height: 4px;
+    margin-top: 12px;
+    border-radius: 2px;
+    background: #444;
 }
 .slider-track{
     display: block;
-    height: 8px;
+    height: 4px;
     border-radius: 2px;
-    background-image: linear-gradient(to left,rgb(89,40,213),#800599);
-    transition: all 0.1s;
+    background-image: linear-gradient(to left, rgb(243, 222, 29), #ebc70f);
+    transition: width 0.1s;
+}
+.slider .slider-btn{
+    position: absolute;
+    left:0;
+    top:-6px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    transition: left 0.1s;
+    background: radial-gradient(#ebc70f, #f3de1d, #cccccc);
+    cursor: pointer;
 }
 .cur_time,.end_time{
     width: 80px;
     text-align: center;
-    color: #fff;
+}
+.clearfix{
+    display: inline-block;
+    width: 100%;
+}
+.clearfix::after{
+    display: block;
+    content: ".";
+    width: 0;
+    height:0;
+    clear: both;
+    visibility: hidden;
 }
 .lyr-wrapper{
+    position: absolute;
+    top:60px;
+    bottom:50px;
     width: 100%;
-    height:100%;
-    padding:40px 0;
+    padding:20px 0;
     margin-bottom:0;
-    background: rgba(0,0,0,.6);
     overflow-y: auto;
 }
 .lyr-wrapper li{
@@ -449,7 +487,7 @@ header {
     }
     .singer-list-hash li{
         font-size:9px;
-        padding:2px;
+        padding:2px 3px;
         line-height:12px;
     }
 }
