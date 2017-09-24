@@ -58,7 +58,7 @@ h5{
     display: inline-block;
     padding:0 15px;
     line-height:30px;
-    border:1px solid #096;
+    border:1px solid #e9cd12;
     margin-left:10px;
     text-align: center;
     color: #555;
@@ -141,7 +141,7 @@ h5{
     cursor: pointer;
 }
 .singer-list-hash li:hover{
-    color: #096;
+    color: #e9cd12;
 }
 .singer-list-hash li:nth-child(odd){
     background: rgba(0,0,0,.4);
@@ -185,7 +185,7 @@ h5{
 .singer-name{
     font-size:12px;
     font-weight:600;
-    color: #096;
+    color: #e9cd12;
     padding:0 15px;
 }
 .singer-detail{
@@ -196,7 +196,7 @@ h5{
     height: 656px;
     padding:0 0 20px;
     background: #fff;
-    color: #096;
+    color: #e9cd12;
     overflow: hidden;
 
 }
@@ -238,7 +238,7 @@ h5{
     font-weight:700;
     line-height:25px;
     font-size:12px;
-    color: #00c487;
+    color: #e9cd12;
 }
 .avatar-box{
     width: 100%;
@@ -261,7 +261,7 @@ h5{
     display: block;
     line-height:20px;
     font-size:12px;
-    color: #096;
+    color: #e9cd12;
 }
 .box-mask{
     position: relative;
@@ -329,7 +329,7 @@ h5{
     text-align: center;
 }
 .player:hover i{
-    color: #096;
+    color: #e9cd12;
 }
 .box-mask{
     height: 656px;
@@ -382,7 +382,7 @@ h5{
     color: #fff;
 }
 .controller-hook:hover{
-    color: #096;
+    color: #e9cd12;
 }
 .bottom-wrapper{
     padding:15px 0;
@@ -451,7 +451,7 @@ h5{
     transition:all 0.15s;
 }
 .lyr-wrapper li.active{
-    color: #096;
+    color: #e9cd12;
     font-size:14px;
 }
 .miniplayer{
