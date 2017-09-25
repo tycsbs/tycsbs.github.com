@@ -1,0 +1,59 @@
+body{
+    background: #f3f5f7;
+}
+section{
+    margin-top:15px;
+    padding:0;
+    border:1px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
+}
+section > p{
+    line-height:30px;
+    padding:0 10px;
+    font-size:12px;
+    color: #fff;
+    background: #2c83b2;
+}
+section .content{
+    padding:10px;
+
+}
+section .content .box{
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    margin-right:10px;
+    border:1px solid #ccc;
+}
+section .content .box1{
+    background: #fff;
+    background-image: linear-gradient(90deg,rgba(200,0,0,.5) 50%,transparent 0),
+    linear-gradient(rgba(200,0,0,.5) 50%,transparent 0);
+    background-size: 40px 40px;
+}
+section .content .box2{
+    background: #58a;
+    background-image: linear-gradient(90deg,#fff 1px,transparent 0),
+    linear-gradient(#fff 1px,transparent 0);
+    background-size: 20px 20px;
+}
+section .content .box3{
+    background: #58a;
+    background-image: linear-gradient(90deg,#fff 1px,transparent 0),
+                      linear-gradient(#fff 1px,transparent 0),
+                      linear-gradient(#fff 2px,transparent 0),
+                      linear-gradient(90deg,#fff 2px,transparent 0);
+    background-size: 20px 20px,20px 20px,60px 60px,60px 60px;
+}
+section .content .box4{
+    background: #096;
+    background-image:radial-gradient(#fff 20%,transparent 0);
+    background-size: 40px 40px;
+}
+section .content .box5{
+    background: #096;
+    background-image:radial-gradient(#fff 20%,transparent 0),radial-gradient(#fff 20%,transparent 0);
+    background-size: 40px 40px;
+    background-position: 0 0,20px 20px;
+}
