@@ -24,6 +24,7 @@ section .content .box{
     width: 200px;
     height: 200px;
     margin-right:10px;
+    margin-bottom:10px;
     border:1px solid #ccc;
 }
 section .content .box1{
@@ -56,4 +57,33 @@ section .content .box5{
     background-image:radial-gradient(#fff 20%,transparent 0),radial-gradient(#fff 20%,transparent 0);
     background-size: 40px 40px;
     background-position: 0 0,20px 20px;
+}
+section .content .box6{
+    border-radius: 15px / 10px;
+}
+section .content .box7{
+    width:300px;
+    border-radius: 50%;
+}
+section .content .box8{
+    transform: rotate(45deg);
+    margin-right:50px;
+    overflow: hidden;
+    border:none;
+}
+section .content .box8 img{
+    max-width: 100%;
+    transform: rotate(-45deg) scale(1.42);
+}
+section .content .box9{
+    margin-right:50px;
+    overflow: hidden;
+    border:none;
+}
+section .content .box9 img{
+    clip-path: polygon(50% 0,100% 0,50% 100%,0 50%);
+    transition: clip-path 1s;
+}
+section .content .box9 img:hover{
+    clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
 }
