@@ -130,3 +130,31 @@ section .content .box13{
     background-size:50% 50%;
     background-repeat: no-repeat;
 }
+
+section .content .box14{
+    position: relative;
+    border-radius: 50%;
+    vertical-align: bottom;
+    background: #096;
+    background-image: linear-gradient(to right,transparent 50%,#655 0);
+    color: transparent;
+    text-align: center;
+}
+@keyframes spin {
+    to{transform: rotate(.5turn)}
+}
+@keyframes bg {
+    50%{ background: #655;}
+}
+.box14::before{
+    content:".";
+    position: absolute;
+    top:0;left:50%;
+    width:50%;height: 100%;
+    border-radius: 0 100% 100% 0 / 50%;
+    background-color: inherit;
+    transform-origin: left;
+    animation: spin 10s linear infinite,bg 20s step-end infinite;
+    /*animation-play-state: paused;*/
+    animation-delay: inherit;
+}
