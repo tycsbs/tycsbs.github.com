@@ -62,8 +62,14 @@ section .content .box6{
     border-radius: 15px / 10px;
 }
 section .content .box7{
-    width:300px;
-    border-radius: 50%;
+    border:none;
+    overflow: hidden;
+}
+section .content .box7 img{
+    width: 100%;
+    cursor: pointer;
+    clip-path: polygon(0 25px,25px 0,175px 0,200px 25px,200px 175px,175px 200px,25px 200px,0 175px);
+    transition: clip-path .5s;
 }
 section .content .box8{
     transform: rotate(45deg);
@@ -74,7 +80,9 @@ section .content .box8{
 section .content .box8 img{
     max-width: 100%;
     transform: rotate(-45deg) scale(1.42);
+
 }
+
 section .content .box9{
     margin-right:50px;
     overflow: hidden;
@@ -155,6 +163,32 @@ section .content .box14{
     background-color: inherit;
     transform-origin: left;
     animation: spin 10s linear infinite,bg 20s step-end infinite;
-    /*animation-play-state: paused;*/
+    animation-play-state: paused;
     animation-delay: inherit;
+}
+
+section .content .box15{
+    position: relative;
+    padding:10px;
+    background: #2c83b2;
+    color: #FFF;
+    line-height:1.5;
+    /*box-shadow: 0 0 10px rgba(46,164,11,.5);*/
+    filter: drop-shadow(2px 2px 6px rgba(0,0,0,.75));
+}
+.shadow{
+    vertical-align: top;
+    margin-left:20px;
+    filter: drop-shadow(2px 2px 6px rgba(0,0,0,.75));
+}
+.box15::before{
+    position: absolute;
+    content:" ";
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    right:-10px;
+    top:85px;
+    background: inherit;
+
 }
