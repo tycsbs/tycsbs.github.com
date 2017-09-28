@@ -203,4 +203,10 @@ section .content .box16{
     background-repeat: no-repeat;
     background-position:100% 0 ;
 }
+section .content .box17{
+    border:none;
+    background: #58a;
+    background: linear-gradient(to left bottom,transparent 50%,rgba(0,0,0,.5) 0) 100% 0 no-repeat,linear-gradient(-143deg,transparent 15px,#58a 0);
+    background-size: 25px 18px,auto;
+}
 
