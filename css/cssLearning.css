@@ -45,7 +45,7 @@ section .content .box3{
                       linear-gradient(#fff 1px,transparent 0),
                       linear-gradient(#fff 2px,transparent 0),
                       linear-gradient(90deg,#fff 2px,transparent 0);
-    background-size: 20px 20px,20px 20px,60px 60px,60px 60px;
+    background-size: 20px ,20px,60px,60px;
 }
 section .content .box4{
     background: #096;
