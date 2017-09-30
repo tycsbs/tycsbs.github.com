@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>chatroom</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        .room-wrapper {
+            position: relative;
+            max-width: 415px;
+            min-height: 600px;
+            max-height: 736px;
+            margin: 40px auto;
+            font: 500 12px / 1.5 Microsoft YaHei;
+        }
+
+        .room-wrapper .title {
+            line-height: 30px;
+            background: #01616c;
+            background-image: linear-gradient(-45deg, transparent 50%, #0197A6 0);
+            color: #fff;
+            text-align: center;
+        }
+
+        .room-wrapper .msg-wrapper {
+            position: absolute;
+            top: 30px;
+            bottom: 30px;
+            width: 100%;
+            border: 1px solid #f3f5f7;
+            background: #f3f5f7;
+            overflow: hidden;
+        }
+
+        .room-wrapper .msg-wrapper ul {
+            padding: 5px;
+            margin: 0;
+        }
+
+        .room-wrapper .msg-wrapper li {
+            padding: 8px 0;
+            list-style: none;
+        }
+        .room-wrapper .msg-wrapper li.owner{
+            width: 100%;
+            float: right;
+            text-align: right;
+        }
+        .room-wrapper .msg-wrapper li.owner i{
+            float: right;
+            margin-left:8px;
+        }
+        .room-wrapper .msg-wrapper li.owner .msg-box{
+            float: right;
+        }
+
+        .room-wrapper .msg-wrapper li.enter, .room-wrapper .msg-wrapper li.leave {
+            padding: 0;
+            margin:2px 0;
+            text-align: center;
+            line-height: 18px;
+            font-size: 12px;
+            color: #018592;
+        }
+
+        .room-wrapper .msg-wrapper li.leave {
+            color: #99061b;
+        }
+
+        .room-wrapper .msg-wrapper li i {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            padding: 5px;
+            vertical-align: top;
+            border-radius: 50%;
+            font-size: 20px;
+            color: #0197A6;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .msg-wrapper li .msg-box {
+            display: inline-block;
+        }
+
+        .room-wrapper .msg-wrapper li span.msg {
+            position: relative;
+            display: block;
+            vertical-align: top;
+            margin-left: 10px;
+            padding: 5px 15px;
+            font-size: 12px;
+            background: #5db2bd;
+            color: #fff;
+            border-radius: 3px;
+        }
+
+        .msg-wrapper li span.user {
+            display: inline-block;
+            padding-left: 10px;
+            font-size: 10px;
+            line-height: 12px;
+            vertical-align: top;
+            color: #999;
+        }
+
+        .room-wrapper .msg-wrapper li.left span.msg::before {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            top: 6px;
+            left: -3px;
+            background: inherit;
+            transform: rotate(45deg);
+        }
+        .room-wrapper .msg-wrapper li.owner span.msg::before{
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            top: 6px;
+            right: -3px;
+            background: inherit;
+            transform: rotate(45deg);
+        }
+
+        .msg-send-wrapper {
+            display: flex;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            height: 35px;
+        }
+
+        .msg-send-wrapper .form-control {
+            flex: 1;
+            border-radius: 0;
+            height: 35px;
+        }
+
+        .msg-send-wrapper a.btn-success {
+            border-radius: 0;
+            background: #0197A6;
+        }
+
+        .msg-send-wrapper a.btn-success:hover, .msg-send-wrapper a.btn-success:active {
+            background: #018592;
+        }
+        .clearfix{
+            position: relative;
+        }
+        .clearfix::after{
+            content:".";
+            display: block;
+            width: 0;
+            height:0;
+            clear: both;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="room-wrapper">
+        <div class="title">聊天室</div>
+        <div class="msg-wrapper" id="msgWrapper">
+            <ul id="msglist">
+
+            </ul>
+        </div>
+        <div class="msg-send-wrapper">
+            <input type="text" class="form-control" id="msg">
+            <a href="javascript:;" class="btn btn-success" id="send">发送</a>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/socket.io/1.7.3/socket.io.min.js"></script>
+<script src="js/bscroll.min.js"></script>
+<script>
+
+	function $(id) {
+		return document.querySelector(id)
+	}
+	var isOwner = 1
+	window.onload = function () {
+		var wrapper = $("#msgWrapper")
+		var socket = io("ws://10.10.28.189:3000/")
+		$('#send').onclick = function () {
+			sendMsg()
+		}
+		$("#msg").addEventListener('keypress',function(e){
+            if(e.keyCode == 13){
+	            sendMsg()
+            }
+        })
+
+		socket.on('enter', function (data) {
+			showMsg('enter', data)
+		})
+		socket.on('msg', function (data) {
+			showMsg('msg', data)
+		})
+		socket.on('leave', function (data) {
+			showMsg('leave', data)
+		})
+
+		function showMsg(type, data) {
+			var user, msg, owner,li = document.createElement('li')
+			user = data.split(":")[0]
+			msg = data.split(":")[1]
+            if(isOwner === 1){
+	            owner = user;
+            }
+
+			if (type === "msg") {
+				isOwner++
+                console.log(isOwner)
+				li.innerHTML = `
+                    <i class="fa fa-user"></i>
+                    <div class="msg-box">
+                        <span class="user clearfix">${user}</span>
+                        <span class="msg">${msg}</span>
+                    </div>
+                    `
+                if(user == owner){
+	                li.classList.add('owner','clearfix')
+	                li.classList.remove("left")
+                    console.log("owner")
+                }else{
+	                li.classList.remove('owner','clearfix')
+	                li.classList.add("left")
+	                console.log("left")
+                }
+			} else if (type === "enter") {
+				li.innerHTML = `${user}上线`
+				li.classList.add('enter')
+			} else {
+				li.innerHTML = `${user}已离线`
+				li.classList.add('leave')
+			}
+			$("#msglist").appendChild(li)
+			if (!bs) {
+				var bs = new BScroll(wrapper, {
+					click: true
+				})
+			}
+		}
+		function sendMsg(){
+			var val = $("#msg").value
+			if (val.length) {
+				socket.emit('msg', val)
+			}
+			$("#msg").value = ""
+        }
+
+	}
+</script>
+</body>
+</html>

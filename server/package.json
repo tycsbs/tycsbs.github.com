@@ -1,0 +1,15 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "websocket server",
+  "main": "wsServer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"node wsServer.js"
+  },
+  "dependencies": {
+    "socket.io": "^1.7.3"
+  },
+  "author": "tutebaisong@163.com",
+  "license": "MIT"
+}
