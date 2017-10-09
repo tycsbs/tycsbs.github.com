@@ -185,10 +185,9 @@
 	function $(id) {
 		return document.querySelector(id)
 	}
-	var isOwner = 1
 	window.onload = function () {
 		var wrapper = $("#msgWrapper")
-		var socket = io("ws://10.10.28.189:3000/")
+		var socket = io("ws://10.10.28.132:3000/")
 		$('#send').onclick = function () {
 			sendMsg()
 		}
@@ -210,31 +209,19 @@
 
 		function showMsg(type, data) {
 			var user, msg, owner,li = document.createElement('li')
-			user = data.split(":")[0]
-			msg = data.split(":")[1]
-            if(isOwner === 1){
-	            owner = user;
-            }
+            var temp = data.split(":")
+			user = temp[0]
+			msg = temp[1]
 
 			if (type === "msg") {
-				isOwner++
-                console.log(isOwner)
 				li.innerHTML = `
                     <i class="fa fa-user"></i>
                     <div class="msg-box">
                         <span class="user clearfix">${user}</span>
                         <span class="msg">${msg}</span>
-                    </div>
-                    `
-                if(user == owner){
-	                li.classList.add('owner','clearfix')
-	                li.classList.remove("left")
-                    console.log("owner")
-                }else{
-	                li.classList.remove('owner','clearfix')
-	                li.classList.add("left")
-	                console.log("left")
-                }
+                    </div>`
+				li.classList.remove('owner','clearfix')
+				li.classList.add("left")
 			} else if (type === "enter") {
 				li.innerHTML = `${user}上线`
 				li.classList.add('enter')
@@ -242,11 +229,15 @@
 				li.innerHTML = `${user}已离线`
 				li.classList.add('leave')
 			}
+			var msgHeight1 = $("#msglist").clientHeight
 			$("#msglist").appendChild(li)
-			if (!bs) {
-				var bs = new BScroll(wrapper, {
-					click: true
-				})
+            var msgHeight = $("#msglist").clientHeight
+			if (msgHeight > 300) {
+				var bs = new BScroll(wrapper,{
+					startY:msgHeight1
+                })
+                bs.refresh()
+                bs.scrollToElement(li,300)
 			}
 		}
 		function sendMsg(){
