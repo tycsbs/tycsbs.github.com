@@ -1,12 +1,18 @@
 body{
     background: #f3f5f7;
 }
+.row{
+    position: absolute;
+    z-index: -3;
+}
 section{
+    position: relative;
     margin-top:15px;
     padding:0;
     border:1px solid #ccc;
     border-radius: 5px;
     background: #fff;
+    z-index: -2;
 }
 section > p{
     line-height:30px;
@@ -240,5 +246,58 @@ section .content .box18::before{
     border-bottom-left-radius: 6px;
     box-shadow: -1px 1px 3px -1px rgba(0,0,0,.1);
 }
-
-
+section .content .box19{
+    position: relative;
+    display: inline-block;
+    width: 130px;
+    height:40px;
+    line-height:40px;
+    text-align: center;
+    color: #fff;
+    background:rgba(85,130,171,.6);
+}
+section .content .box19::before{
+    position: absolute;
+    content:'';
+    z-index: -1;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    background:rgba(85,130,171,.6);
+    transform: perspective(10px) rotateX(5deg);
+    transform-origin: bottom;
+}
+section .content .box20{
+    position: relative;
+    vertical-align: middle;
+    border:none;
+    display: inline-block;
+    width: 130px;
+    height:40px;
+    line-height:40px;
+    text-align: center;
+    color: #fff;
+}
+section .content .box20::before{
+    position: absolute;
+    content:'';
+    z-index: -1;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    background:rgba(85,130,171,.6);
+    transform: perspective(10px) rotateX(5deg);
+    transform-origin: left;
+}
+section .content .box21{
+    width: 160px;
+    height:40px;
+    margin-left:30px;
+    background: #68a;
+    line-height:40px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 4px 0 4px -4px rgba(0,0,0,1),-4px 0 4px -4px rgba(0,0,0,1);
+}
