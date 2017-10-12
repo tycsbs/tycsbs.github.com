@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>stick footer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #2e7eab;
+        }
+
+        .container {
+            position: relative;
+            width: 415px;
+            height: 616px;
+            border: 1px solid #ccc;
+            margin: 50px auto;
+            background: rgba(0, 0, 0, .2);
+        }
+
+        .stick-wrapper {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            font-size: 0;
+            overflow: auto;
+        }
+
+        .content-wrapper {
+            min-height: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .content-wrapper .content {
+            margin-top: 64px;
+            padding-bottom: 64px;
+
+            line-height: 18px;
+            color: #fff;
+            font-size: 12px;
+            text-align: justify;
+        }
+
+        .footer-wrapper {
+            position: relative;
+            height: 64px;
+            width: 100%;
+            margin: -64px auto 0;
+            clear: both;
+
+            text-align: center;
+            color: #FFF;
+            font-size: 12px;
+        }
+
+        .footer-wrapper span {
+            display: inline-block;
+            padding: 0 15px;
+            background: rgba(0, 0, 0, .4);
+            line-height: 32px;
+            cursor: pointer;
+        }
+
+        .clearfix {
+            display: inline-block;
+        }
+
+        .clearfix:before {
+            display: block;
+            content: '.';
+            height: 0;
+            clear: both;
+            visibility: hidden;
+
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="stick-wrapper">
+        <div class="content-wrapper clearfix">
+            <div class="content">
+                <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis deserunt eligendi exercitationem
+                    iusto mollitia odio placeat possimus praesentium provident quasi qui quos recusandae repellat
+                    sapiente, tenetur. Incidunt nobis numquam vero!
+                </div>
+                <div>Dolor dolorum impedit in ipsa, magnam provident repellendus voluptates? Blanditiis dolore iste
+                    repellat. Ab accusamus animi, beatae culpa dolor enim, eos hic non nostrum officiis perspiciatis
+                    porro quo ratione ut?
+                </div>
+
+            </div>
+        </div>
+        <div class="footer-wrapper">
+            <span>close</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>
