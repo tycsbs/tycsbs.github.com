@@ -159,9 +159,8 @@ h5{
 }
 .singer-list li{
     list-style: none;
-    padding: 4px;
-    background: rgba(0,0,0,.8);
-    border-bottom: 1px solid #555;
+    padding: 3px 8px;
+    background: rgba(0,0,0,.6);
 }
 .singer-list li.singer-category{
     background: #333;
