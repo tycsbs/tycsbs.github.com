@@ -37,106 +37,105 @@
 <script src="js/bscroll.min.js"></script>
 <script>
 
-	function $(id) {
-		return document.querySelector(id)
-	}
+    function $(id) {
+        return document.querySelector(id)
+    }
 
 
-	window.onload = function () {
-		/*用户登录*/
-		var userObj = {};
-		var localUser = window.localStorage.__chartUser__
+    window.onload = function () {
+        var isInitScroll = false, bs;
+        var wrapper = $("#msgWrapper");
+        var socket = io("ws://localhost:3000/");
+        /*用户登录*/
+        var localUser = window.localStorage.__chartUser__;
         if(!localUser){
-	        localUser = {}
-	        $("#loginWrapper").style.display='block'
+            localUser = {}
+        }else{
+            localUser = JSON.parse(localUser)
         }
-        else{
-        	var u = JSON.parse(localUser).user
-	        userObj = u
-	        $("#username").value = u.name;
-	        $("#pwd").value = u.pwd;
-	        $("#loginWrapper").style.display='none'
-        }
-		$("#login").onclick=function(){
-			var user = $("#username").value;
-			var pwd = $("#pwd").value;
-            if(user.length > 1 && pwd.length > 1){
-	            userObj["name"] = encodeURIComponent(user);
-	            userObj["pwd"] = encodeURIComponent(pwd);
-	            localUser["user"] = JSON.stringify(userObj)
-	            $("#loginWrapper").style.display='none'
-            } else{
-            	alert("用户名或密码不能为空")
+        var newUser = {};
+
+        $("#loginWrapper").style.display = 'block'
+        $("#login").onclick = function () {
+            var user = $("#username").value;
+            var pwd = $("#pwd").value;
+            if (user.length > 1 && pwd.length > 1) {
+                newUser["name"] = encodeURIComponent(user);
+                newUser["pwd"] = encodeURIComponent(pwd);
+                localUser[user] = newUser;
+                $("#loginWrapper").style.display = 'none';
+
+                window.localStorage.__chartUser__ = JSON.stringify(localUser);
+                socket.emit('login', newUser);
+            } else {
+                alert("用户名或密码不能为空")
             }
-            window.localStorage.__chartUser__ = JSON.stringify(localUser)
-			$("#username").value = "";
+            $("#username").value = "";
             $("#pwd").value = "";
-        }
-		/*信息处理*/
-		var wrapper = $("#msgWrapper")
-		var socket = io("ws://10.10.28.132:3000/")
-		$('#send').onclick = function () {
-			sendMsg(userObj)
-		}
-		$("#msg").addEventListener('keypress',function(e){
-            if(e.keyCode == 13){
-	            sendMsg(userObj)
+        };
+        /*信息处理*/
+
+        $('#send').onclick = function () {
+            sendMsg(newUser)
+        };
+        $("#msg").addEventListener('keypress', function (e) {
+            if (e.keyCode == 13) {
+                sendMsg(newUser)
             }
-        })
+        });
+        socket.on('login', function (data) {
+            showMsg('login', data)
+        });
+        socket.on('msg', function (data) {
+            showMsg('msg', data)
+        });
+        socket.on('leave', function (data) {
+            showMsg('leave', data)
+        });
 
-		socket.on('enter', function (data) {
-			showMsg('enter', data)
-		})
-		socket.on('msg', function (data) {
-			showMsg('msg', data)
-		})
-		socket.on('leave', function (data) {
-			showMsg('leave', data)
-		})
-
-		function showMsg(type, data) {
-			var user, msg, owner,li = document.createElement('li')
-            var temp = data.split(":")
-			user = temp[0]
-			msg = temp[1]
-
-			if (type === "msg") {
-				li.innerHTML = `
+        function showMsg(type, data) {
+            var user, msg = "", owner, li = document.createElement('li');
+            user = data.name;
+            if (data.text) {
+                msg = data.text
+            }
+            if (type === "msg") {
+                li.innerHTML = `
                     <i class="fa fa-user"></i>
                     <div class="msg-box">
                         <span class="user clearfix">${user}</span>
                         <span class="msg">${msg}</span>
-                    </div>`
-				li.classList.remove('owner','clearfix')
-				li.classList.add("left")
-			} else if (type === "enter") {
-				li.innerHTML = `<span>${user}上线</span>`
-				li.classList.add('enter')
-			} else {
-				li.innerHTML = `<span>${user}离线</span>`
-				li.classList.add('leave')
-			}
-			var msgHeight1 = $("#msglist").clientHeight
-			$("#msglist").appendChild(li)
-            var msgHeight = $("#msglist").clientHeight
-			if (msgHeight > 300) {
-				var bs = new BScroll(wrapper,{
-					startY:msgHeight1
-                })
-                bs.refresh()
-                bs.scrollToElement(li,300)
-			}
-		}
-		function sendMsg(userinfo){
-			var info = JSON.parse(userinfo)
-			var val = $("#msg").value;
-			if (val.length) {
-				info["text"] = val
-				socket.emit('msg', info)
-			}
-			$("#msg").value = ""
+                    </div>`;
+                li.classList.remove('owner', 'clearfix');
+                li.classList.add("left")
+            } else if (type === "login") {
+                li.innerHTML = `<span>${user}加入群聊</span>`;
+                li.classList.add('enter')
+            } else {
+                li.innerHTML = `<span>${user}退出群聊</span>`;
+                li.classList.add('leave')
+            }
+            var msgHeight1 = $("#msglist").clientHeight;
+            $("#msglist").appendChild(li);
+
+            if (!isInitScroll) {
+                bs = new BScroll(wrapper);
+                isInitScroll = !isInitScroll;
+            }else{
+                bs.refresh();
+                bs.scrollToElement(li, 300)
+            }
         }
-	}
+
+        function sendMsg(user) {
+            var val = $("#msg").value;
+            if (val.length) {
+                user["text"] = val;
+                socket.emit('msg', user)
+            }
+            $("#msg").value = ""
+        }
+    }
 </script>
 </body>
 </html>

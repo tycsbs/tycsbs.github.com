@@ -1,10 +1,16 @@
+html,body{
+    height: 100%;
+}
 .container{
     padding:0;
     margin:0;
+    height: 100%;
     overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
 }
 .login-pannel{
-    position: fixed;
+    position: absolute;
     top:0;left:0;right:0;bottom:0;
     background: #f3f5f7;
     text-align: center;
@@ -36,13 +42,15 @@
 .room-wrapper {
     position: relative;
     width:100%;
-    min-height: 600px;
+    height:100%;
     margin: 0 auto;
     font: 500 12px / 1.5 Microsoft YaHei;
 }
 @media all and (min-width:415px) {
-    .room-wrapper,.login-pannel{
+    .container,.room-wrapper,.login-pannel{
         width:415px;
+        height:667px;
+        margin:0 auto;
     }
 }
 
