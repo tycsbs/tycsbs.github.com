@@ -6,162 +6,7 @@
     <title>chatroom</title>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <style>
-        .room-wrapper {
-            position: relative;
-            max-width: 415px;
-            min-height: 600px;
-            max-height: 736px;
-            margin: 40px auto;
-            font: 500 12px / 1.5 Microsoft YaHei;
-        }
-
-        .room-wrapper .title {
-            line-height: 30px;
-            background: #01616c;
-            background-image: linear-gradient(-45deg, transparent 50%, #0197A6 0);
-            color: #fff;
-            text-align: center;
-        }
-
-        .room-wrapper .msg-wrapper {
-            position: absolute;
-            top: 30px;
-            bottom: 30px;
-            width: 100%;
-            border: 1px solid #f3f5f7;
-            background: #f3f5f7;
-            overflow: hidden;
-        }
-
-        .room-wrapper .msg-wrapper ul {
-            padding: 5px;
-            margin: 0;
-        }
-
-        .room-wrapper .msg-wrapper li {
-            padding: 8px 0;
-            list-style: none;
-        }
-        .room-wrapper .msg-wrapper li.owner{
-            width: 100%;
-            float: right;
-            text-align: right;
-        }
-        .room-wrapper .msg-wrapper li.owner i{
-            float: right;
-            margin-left:8px;
-        }
-        .room-wrapper .msg-wrapper li.owner .msg-box{
-            float: right;
-        }
-
-        .room-wrapper .msg-wrapper li.enter, .room-wrapper .msg-wrapper li.leave {
-            padding: 0;
-            margin:2px 0;
-            text-align: center;
-            line-height: 18px;
-            font-size: 12px;
-            color: #018592;
-        }
-
-        .room-wrapper .msg-wrapper li.leave {
-            color: #99061b;
-        }
-
-        .room-wrapper .msg-wrapper li i {
-            display: inline-block;
-            width: 32px;
-            height: 32px;
-            padding: 5px;
-            vertical-align: top;
-            border-radius: 50%;
-            font-size: 20px;
-            color: #0197A6;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-
-        .msg-wrapper li .msg-box {
-            display: inline-block;
-        }
-
-        .room-wrapper .msg-wrapper li span.msg {
-            position: relative;
-            display: block;
-            vertical-align: top;
-            margin-left: 10px;
-            padding: 5px 15px;
-            font-size: 12px;
-            background: #5db2bd;
-            color: #fff;
-            border-radius: 3px;
-        }
-
-        .msg-wrapper li span.user {
-            display: inline-block;
-            padding-left: 10px;
-            font-size: 10px;
-            line-height: 12px;
-            vertical-align: top;
-            color: #999;
-        }
-
-        .room-wrapper .msg-wrapper li.left span.msg::before {
-            content: "";
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            top: 6px;
-            left: -3px;
-            background: inherit;
-            transform: rotate(45deg);
-        }
-        .room-wrapper .msg-wrapper li.owner span.msg::before{
-            content: "";
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            top: 6px;
-            right: -3px;
-            background: inherit;
-            transform: rotate(45deg);
-        }
-
-        .msg-send-wrapper {
-            display: flex;
-            position: absolute;
-            width: 100%;
-            bottom: 0;
-            height: 35px;
-        }
-
-        .msg-send-wrapper .form-control {
-            flex: 1;
-            border-radius: 0;
-            height: 35px;
-        }
-
-        .msg-send-wrapper a.btn-success {
-            border-radius: 0;
-            background: #0197A6;
-        }
-
-        .msg-send-wrapper a.btn-success:hover, .msg-send-wrapper a.btn-success:active {
-            background: #018592;
-        }
-        .clearfix{
-            position: relative;
-        }
-        .clearfix::after{
-            content:".";
-            display: block;
-            width: 0;
-            height:0;
-            clear: both;
-            visibility: hidden;
-        }
-    </style>
+    <link rel="stylesheet" href="css/chartroom.css">
 </head>
 <body>
 <div class="container">
@@ -177,6 +22,16 @@
             <a href="javascript:;" class="btn btn-success" id="send">发送</a>
         </div>
     </div>
+    <div class="login-pannel" id="loginWrapper">
+        <div class="avatar-wrapper">
+            <img src="images/avatar.png" width="100">
+        </div>
+        <div class="form-wrapper">
+            <input id="username" type="text" class="form-control" placeholder="用户名">
+            <input id="pwd" type="password" class="form-control" placeholder="密码">
+        </div>
+        <a href="javascript:;" id="login" class="btn btn-success">登录</a>
+    </div>
 </div>
 <script src="https://cdn.bootcss.com/socket.io/1.7.3/socket.io.min.js"></script>
 <script src="js/bscroll.min.js"></script>
@@ -185,15 +40,47 @@
 	function $(id) {
 		return document.querySelector(id)
 	}
+
+
 	window.onload = function () {
+		/*用户登录*/
+		var userObj = {};
+		var localUser = window.localStorage.__chartUser__
+        if(!localUser){
+	        localUser = {}
+	        $("#loginWrapper").style.display='block'
+        }
+        else{
+        	var u = JSON.parse(localUser).user
+	        userObj = u
+	        $("#username").value = u.name;
+	        $("#pwd").value = u.pwd;
+	        $("#loginWrapper").style.display='none'
+        }
+		$("#login").onclick=function(){
+			var user = $("#username").value;
+			var pwd = $("#pwd").value;
+            if(user.length > 1 && pwd.length > 1){
+	            userObj["name"] = encodeURIComponent(user);
+	            userObj["pwd"] = encodeURIComponent(pwd);
+	            localUser["user"] = JSON.stringify(userObj)
+	            $("#loginWrapper").style.display='none'
+            } else{
+            	alert("用户名或密码不能为空")
+            }
+            window.localStorage.__chartUser__ = JSON.stringify(localUser)
+			$("#username").value = "";
+            $("#pwd").value = "";
+        }
+		/*信息处理*/
 		var wrapper = $("#msgWrapper")
 		var socket = io("ws://10.10.28.132:3000/")
 		$('#send').onclick = function () {
-			sendMsg()
+			sendMsg(userObj)
 		}
 		$("#msg").addEventListener('keypress',function(e){
             if(e.keyCode == 13){
-	            sendMsg()
+	            sendMsg(userObj)
             }
         })
 
@@ -223,10 +110,10 @@
 				li.classList.remove('owner','clearfix')
 				li.classList.add("left")
 			} else if (type === "enter") {
-				li.innerHTML = `${user}上线`
+				li.innerHTML = `<span>${user}上线</span>`
 				li.classList.add('enter')
 			} else {
-				li.innerHTML = `${user}已离线`
+				li.innerHTML = `<span>${user}离线</span>`
 				li.classList.add('leave')
 			}
 			var msgHeight1 = $("#msglist").clientHeight
@@ -240,14 +127,15 @@
                 bs.scrollToElement(li,300)
 			}
 		}
-		function sendMsg(){
-			var val = $("#msg").value
+		function sendMsg(userinfo){
+			var info = JSON.parse(userinfo)
+			var val = $("#msg").value;
 			if (val.length) {
-				socket.emit('msg', val)
+				info["text"] = val
+				socket.emit('msg', info)
 			}
 			$("#msg").value = ""
         }
-
 	}
 </script>
 </body>

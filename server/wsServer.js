@@ -2,17 +2,16 @@ var app = require('http').createServer()
 var io = require('socket.io')(app)
 var PORT = 3000
 app.listen(PORT)
-var clientCount = 0
 io.on('connection',function(socket){
-	clientCount++
-	socket.name = `用户${clientCount}`
-	io.emit('enter',`${socket.name}: 上线`)
+	socket.on('enter',(str) => {
+		io.emit('enter',`${str.name}: 上线`)
+	})
 
 	socket.on('msg',(str) => {
-		io.emit("msg",`${socket.name}: ${str}`)
+		io.emit("msg",`${str.name}: ${str.text}`)
 	})
-	socket.on('disconnect',() => {
-		io.emit('leave',`${socket.name}: 离线`)
+	socket.on('disconnect',(str) => {
+		io.emit('leave',`${str.name}: 离线`)
 	})
 })
 
