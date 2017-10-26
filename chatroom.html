@@ -41,9 +41,10 @@
         return document.querySelector(id)
     }
 
-
+    var storeKey = "USERONLINE"
     window.onload = function () {
         var isInitScroll = false, bs;
+        var userLoading = localStorage.getItem(storeKey) || false;
         var wrapper = $("#msgWrapper");
         var socket = io("ws://localhost:3000/");
         /*用户登录*/
@@ -62,11 +63,36 @@
             if (user.length > 1 && pwd.length > 1) {
                 newUser["name"] = encodeURIComponent(user);
                 newUser["pwd"] = encodeURIComponent(pwd);
-                localUser[user] = newUser;
-                $("#loginWrapper").style.display = 'none';
+                for(var k in localUser){
+                    if(k == user){
+                        if(localUser[k].pwd == pwd){
+                            userLoading = localStorage.getItem(storeKey)
+                            if(userLoading == true){
+                                alert(`用户${k}当前在线`)
+                                break;
+                            }else{
+                                $("#loginWrapper").style.display = 'none';
+                                socket.emit('login', newUser);
+                                userLoading = true
+                                localStorage.setItem(storeKey,true)
+                                break;
+                            }
+                        }else{
+                            alert("用户名已存在")
+                            break;
+                        }
+                    }else{
+                        localUser[user] = newUser;
+                        $("#loginWrapper").style.display = 'none';
 
-                window.localStorage.__chartUser__ = JSON.stringify(localUser);
-                socket.emit('login', newUser);
+                        window.localStorage.__chartUser__ = JSON.stringify(localUser);
+                        socket.emit('login', newUser);
+                        userLoading = true
+                        localStorage.setItem(storeKey,true)
+                    }
+
+                }
+
             } else {
                 alert("用户名或密码不能为空")
             }
@@ -113,14 +139,15 @@
                 li.classList.add('enter')
             } else {
                 li.innerHTML = `<span>${user}退出群聊</span>`;
-                li.classList.add('leave')
+                li.classList.add('leave');
+                userLoading = false;
+                localStorage.setItem(storeKey,false)
             }
-            var msgHeight1 = $("#msglist").clientHeight;
             $("#msglist").appendChild(li);
 
             if (!isInitScroll) {
                 bs = new BScroll(wrapper);
-                isInitScroll = !isInitScroll;
+                isInitScroll = true;
             }else{
                 bs.refresh();
                 bs.scrollToElement(li, 300)
