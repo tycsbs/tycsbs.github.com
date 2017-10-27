@@ -11,11 +11,15 @@ io.on('connection', function (socket) {
         io.emit('login', user)
     })
 
-    socket.on('msg', (str) => {
-        // io.emit("msg", `${str.name}: ${str.text}`)
-        io.emit("msg", str)
+    socket.on('msg', (obj) => {
+        io.emit("msg", obj)
     })
     socket.on('disconnect', () => {
+	    for(var i = 0;i<roomUser.length;i++){
+		    if(roomUser[i] == mine){
+			    roomUser.splice(i,1)
+		    }
+	    }
         io.emit('leave', {name:mine})
     })
 })

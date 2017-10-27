@@ -12,8 +12,15 @@ html,body{
 .login-pannel{
     position: absolute;
     top:0;left:0;right:0;bottom:0;
-    background: #f3f5f7;
     text-align: center;
+    -webkit-background-size:cover;
+    background-size:cover;
+    background: #f3f5f7 url("../images/loginBg.jpg") center center;
+}
+.login-pannel .content{
+    position: absolute;
+    top:0;left:0;right:0;bottom:0;
+    background: rgba(100, 100, 100, .12);
 }
 .login-pannel .avatar-wrapper{
     display: inline-block;
@@ -25,7 +32,7 @@ html,body{
     border-radius:50%;
     box-sizing: border-box;
     /*box-shadow: 0 0 8px 0 rgba(0,0,0,.35) ;*/
-    filter: drop-shadow(2px 2px 4px rgba(0,0,0,.35));
+    filter: drop-shadow(2px 2px 4px rgba(255,255,255,.35));
 
 }
 .login-pannel .avatar-wrapper img{
@@ -76,21 +83,32 @@ html,body{
     padding: 5px;
     margin: 0;
 }
+.room-wrapper .msg-wrapper ul:after{
+    content: '';
+    display: block;
+    width: 100%;
+    height:0;
+    clear: both;
+    visibility: hidden;
+}
 
 .room-wrapper .msg-wrapper li {
     padding: 8px 0;
+    width:100%;
     list-style: none;
 }
-.room-wrapper .msg-wrapper li.owner{
-    width: 100%;
+.room-wrapper .msg-wrapper li.left {
+    float: right;
+}
+.room-wrapper .msg-wrapper li.right{
     float: right;
     text-align: right;
 }
-.room-wrapper .msg-wrapper li.owner i{
+.room-wrapper .msg-wrapper li.right i{
     float: right;
     margin-left:8px;
 }
-.room-wrapper .msg-wrapper li.owner .msg-box{
+.room-wrapper .msg-wrapper li.right .msg-box{
     float: right;
 }
 
@@ -148,7 +166,7 @@ html,body{
     display: inline-block;
     padding-left: 10px;
     font-size: 10px;
-    line-height: 12px;
+    line-height: 16px;
     vertical-align: top;
     color: #999;
 }
@@ -160,6 +178,16 @@ html,body{
     height: 8px;
     top: 6px;
     left: -3px;
+    background: inherit;
+    transform: rotate(45deg);
+}
+.room-wrapper .msg-wrapper li.right span.msg::before {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    top: 6px;
+    right: -3px;
     background: inherit;
     transform: rotate(45deg);
 }
