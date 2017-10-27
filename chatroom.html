@@ -63,35 +63,43 @@
             if (user.length > 1 && pwd.length > 1) {
                 newUser["name"] = encodeURIComponent(user);
                 newUser["pwd"] = encodeURIComponent(pwd);
-                for(var k in localUser){
-                    if(k == user){
-                        if(localUser[k].pwd == pwd){
-                            userLoading = localStorage.getItem(storeKey)
-                            if(userLoading == true){
-                                alert(`用户${k}当前在线`)
-                                break;
-                            }else{
-                                $("#loginWrapper").style.display = 'none';
-                                socket.emit('login', newUser);
-                                userLoading = true
-                                localStorage.setItem(storeKey,true)
-                                break;
-                            }
-                        }else{
-                            alert("用户名已存在")
-                            break;
-                        }
-                    }else{
-                        localUser[user] = newUser;
-                        $("#loginWrapper").style.display = 'none';
+                if(JSON.stringify(localUser) == "{}"){
+	                $("#loginWrapper").style.display = 'none';
+	                newUser["online"] = true;
+	                localUser[encodeURIComponent(user)] = newUser;
 
-                        window.localStorage.__chartUser__ = JSON.stringify(localUser);
-                        socket.emit('login', newUser);
-                        userLoading = true
-                        localStorage.setItem(storeKey,true)
-                    }
+	                window.localStorage.__chartUser__ = JSON.stringify(localUser);
+	                socket.emit('login', newUser);
+                }else{
+	                for(var k in localUser){
+		                if(k == user){
+			                if(localUser[k].pwd == pwd){
+				                if(localUser[k]["online"]){
+					                alert(`用户${k}当前已在群聊`)
+					                break;
+				                }else{
+					                newUser["online"] = true;
+					                socket.emit('login', newUser);
+					                $("#loginWrapper").style.display = 'none';
+					                break;
+				                }
+			                }else{
+				                alert("用户名已存在")
+				                break;
+			                }
+		                }else{
+			                $("#loginWrapper").style.display = 'none';
+			                newUser["online"] = true;
+			                localUser[encodeURIComponent(user)] = newUser;
 
+			                window.localStorage.__chartUser__ = JSON.stringify(localUser);
+			                socket.emit('login', newUser);
+			                break;
+		                }
+
+	                }
                 }
+
 
             } else {
                 alert("用户名或密码不能为空")
@@ -121,7 +129,7 @@
 
         function showMsg(type, data) {
             var user, msg = "", owner, li = document.createElement('li');
-            user = data.name;
+            user = decodeURIComponent(data.name);
             if (data.text) {
                 msg = data.text
             }
@@ -140,8 +148,9 @@
             } else {
                 li.innerHTML = `<span>${user}退出群聊</span>`;
                 li.classList.add('leave');
-                userLoading = false;
-                localStorage.setItem(storeKey,false)
+	            var users = JSON.parse(window.localStorage.__chartUser__);
+	            users[user]["online"] = false;
+	            window.localStorage.__chartUser__ = JSON.stringify(users)
             }
             $("#msglist").appendChild(li);
 
