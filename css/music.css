@@ -354,12 +354,17 @@ h5{
 
 .box-mask .lyr-box .albumn{
     display: inline-block;
-    margin:50px auto;;
+    margin:10px auto;;
     width: 260px;
     height: 260px;
     border: 10px solid #0e513b;
     box-shadow: 0 0 20px #6b7773;
     border-radius: 50%;
+}
+.box-mask .lyr-box .chart{
+    width: 100%;
+    height: 200px;
+    background: rgba(0,0,0,.5);
 }
 .box-mask .lyr-box p.active{
     color: #ebdc06;
