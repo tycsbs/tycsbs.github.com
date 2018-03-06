@@ -434,44 +434,6 @@
 	var timer ;
 	var cWidth = box.clientWidth;
 	var cHeight = box.clientHeight;
-
-	function render(){
-		// audio.play();
-		var audioContext = new AudioContext();
-		var analyser = audioContext.createAnalyser();
-		var size = 128;
-		analyser.fftSize = size * 4;
-		var audioSource = audioContext.createMediaElementSource(audio);
-
-		var barW = 10;
-		var gap = 2;
-		canvas.width = cWidth;
-		canvas.height = cHeight;
-
-		var line = ctx.createLinearGradient(0,0,0,cHeight);
-		line.addColorStop(0,"red");
-		line.addColorStop(0.7,"orange");
-		line.addColorStop(1,"green");
-		var barNum = Math.round(cWidth / (barW + gap));
-		ctx.fillStyle = line;
-		var w = cWidth / barNum;
-		audioSource.connect(analyser);
-		analyser.connect(audioContext.destination);
-
-		timer = requestAnimationFrame(function fn() {
-			ctx.clearRect(0,0,cWidth,cHeight);
-            /*获取音频*/
-			var audioArr = new Uint8Array(analyser.frequencyBinCount);
-			analyser.getByteFrequencyData(audioArr);
-            /*画布操作*/
-			for (var i = 0; i< barNum; i++){
-				var v = audioArr[i] / 256 * cHeight * 0.9;
-				ctx.fillRect(w * i,cHeight - v,w*0.6,v)
-			}
-			timer = requestAnimationFrame(fn)
-		})
-	}
-
 	function playMusic(index) {
         var cur_play_info = musiclist[index].songsData;
         var singer = cur_play_info.singer;

@@ -17,6 +17,11 @@
             height: 100%;
         }
 
+        .img {
+            -webkit-filter: blur(10px);
+            filter: blur(10px);
+        }
+
         .dialog-wrapper {
             display: flex;
             width: 300px;
@@ -39,18 +44,18 @@
         <div id="testArr"></div>
         <div id="Bubble"></div>
     </pre>-->
+    <!--<img class="img" src="images/loginBg.jpg">-->
     <a id="btn" class="btn btn-success">play</a>
     <!--<a id="stop" class="btn btn-success">stop</a>-->
     <div id="box" style="width: 100%;height: 400px;">
         <canvas id="canvas"></canvas>
     </div>
-
     <canvas id="mycanvas" width="600" height="400"></canvas>
 
     <audio id="audio" src="" autoplay></audio>
     <!--<iframe src="http://ws.stream.qqmusic.qq.com/107192078.m4a?fromtag=46" frameborder="0" width="0" height="0"></iframe>-->
 </div>
-<!--<script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>-->
+<script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
 <!--<script src="https://cdn.bootcss.com/lodash.js/4.17.4/lodash.min.js"></script>-->
 <!--<script src="js/lodashes.js"></script>-->
 <!--<script src="js/jsSort.js"></script>-->
@@ -58,5 +63,6 @@
 <!--<script src="lib/apply.js"></script>-->
 <!--<script src="lib/bind.js"></script>-->
 <script src="lib/showMusic.js"></script>
+<script src="lib/copy.js"></script>
 </body>
 </html>
