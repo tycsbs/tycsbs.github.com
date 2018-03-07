@@ -1,8 +1,8 @@
 /*mock eventEmitter.js*/
 (function () {
-	var root = ( self && typeof self == 'object' && self.self == self) ||
-		(global && typeof global == 'object' && global.global == global) ||
-		this || {}
+	var root = (typeof self == 'object' && self.self == self && self) ||
+		(typeof global == 'object' && global.global == global && global) ||
+		this || {};
 
 	/**
 	 * 检测是否是监听函数
@@ -55,7 +55,7 @@
 		}
 
 		var events = this._events
-		var listenerList = events[eventName] || []
+		var listenerList = events[eventName] = events[eventName] || []
 		var listenerIsObj = typeof listener === 'object'
 
 		//添加事件到集合
@@ -65,6 +65,8 @@
 					once: false
 				})
 		}
+
+		return this
 	}
 
 	proto.off = function (eventName, listener) {
@@ -73,18 +75,57 @@
 		// 找出listener 在list索引
 		var index = -1
 		for (var i = 0; i < listenerList.length; i++) {
-			if(listenerList[i] && listenerList[i].listener === listener) {
+			if (listenerList[i] && listenerList[i].listener === listener) {
 				index = i
 				break
 			}
 		}
 		// 删除
-		if(index !== -1) {
+		if (index !== -1) {
 			listenerList.splice(index, 1, null)
 		}
 		return this
 	}
 
+	proto.allOff = function (eventName) {
+		if (eventName && this._events[eventName]) {
+			this._events[eventName] = []
+		} else {
+			this._events = {}
+		}
+	}
 
+	proto.once = function (eventName, listener) {
+		return this.on(eventName, {
+			listener: listener,
+			once: true
+		})
+	}
 
+	proto.emit = function (eventName, args) {
+		var listenerList = this._events[eventName]
+		if (!listenerList) {
+			return
+		}
+		for (var i = 0; i < listenerList.length; i++) {
+			var listener = listenerList[i]
+			if (listener) {
+				listener.listener.apply(this, args || [])
+				//如果只能一次，则执行后删除
+				if (listener.once) {
+					this.off(eventName, listener.listener)
+				}
+			}
+		}
+		return this
+	}
+
+	if (typeof exports != 'undefined' && !exports.nodeType) {
+		if (typeof module != 'undefined' && !module.nodeType && module.exports) {
+			exports = module.exports = Emitter;
+		}
+		exports.Emitter = Emitter;
+	} else {
+		root.Emitter = Emitter;
+	}
 }())

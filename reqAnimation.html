@@ -6,37 +6,48 @@
     <title>requestAnimationFrame</title>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .wrapper{
+        .wrapper {
             width: 0;
             height: 200px;
-            margin:20px;
+            margin: 20px;
             /*border:1px solid #0e513b;*/
-            background: linear-gradient(-90deg,red,purple);
+            background: linear-gradient(-90deg, red, purple);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="wrapper"></div>
-        <a href="javascript:;" class="btn btn-success">执行</a>
-    </div>
-    <script>
-        var btn = document.querySelector(".btn")
-        var box = document.querySelector(".wrapper")
-        var timer,boxW
-        btn.addEventListener('click',function (){
-        	box.style.width = '0'
-            cancelAnimationFrame(timer)
-            timer = requestAnimationFrame(function _run(){
-            	boxW = parseInt(box.style.width)
-            	if(boxW < 1100){
-            		box.style.width = `${boxW + 5}px`
-                    timer = requestAnimationFrame(_run)
-                }else{
-            		cancelAnimationFrame(timer)
-                }
-            })
-        })
-    </script>
+<div class="container">
+    <div class="wrapper"></div>
+    <a href="javascript:;" class="btn btn-success">执行</a>
+</div>
+<script>
+	var btn = document.querySelector(".btn")
+	var box = document.querySelector(".wrapper")
+	var timer, boxW
+	btn.addEventListener('click', function () {
+		box.style.width = '0'
+		cancelAnimationFrame(timer)
+		timer = requestAnimationFrame(function _run() {
+			boxW = parseInt(box.style.width)
+			if (boxW < 1100) {
+				box.style.width = `${boxW + 5}px`
+				timer = requestAnimationFrame(_run)
+			} else {
+				cancelAnimationFrame(timer)
+			}
+		})
+	})
+</script>
 </body>
+<script src="js/emitter.js"></script>
+<script>
+	function test(a,b,c) {
+		console.log(this)
+		console.log('test', a, b, c)
+	}
+	var emiter = new Emitter()
+	emiter.on('demo',test)
+	emiter.emit('demo', [1,2,34])
+    
+</script>
 </html>
