@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+	*{ margin: 0; padding: 0; list-style: none; }
+	.all { width: 800px; height: 330px; overflow:hidden; margin: 100px auto; position:relative; }
+	ol { position: absolute; z-index:2; bottom: 10px; left: 10px; }
+	ol li { float: left; width: 22px; height: 22px; line-height:22px; background: #000; color: #fff; text-align: center; margin-right: 5px; cursor:pointer; }
+	ol .current { background: #f60; }
+	#leftBtn { width: 40px; height: 100px; background:url(images/yixun/index.png) no-repeat left top; position:absolute; top: 115px; left: 0; border:none; cursor: pointer; display: none; }
+	#rightBtn { width: 40px; height: 100px; background:url(images/yixun/index.png) no-repeat -50px top; position:absolute; top: 115px; right: 0; border:none; cursor:pointer; display: none; }
+</style>
+<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var timer = null;
+		var thisIndex = 0;//轮播图的灵魂所在，就是要控制这个索引值。
+		function changeImg(){
+			$('ol li').eq(thisIndex).addClass('current').siblings().removeClass('current');
+			$('ul li').eq(thisIndex).hide().stop().fadeIn().siblings().hide();
+		}
+		function fnTimer(){
+			thisIndex++;
+			if(thisIndex > 5){
+				thisIndex = 0;
+			}
+			changeImg();
+		};
+		timer = setInterval(fnTimer,1000);//自动轮播
+		$('ol li').mouseover(function(e) {
+            $(this).addClass('current').siblings().removeClass('current');
+			thisIndex = $(this).index();
+			$('ul li').eq(thisIndex).hide().stop().fadeIn().siblings().hide();
+        });
+		
+		$('.all').hover(function(){
+			$('#leftBtn,#rightBtn').show();
+            clearInterval(timer);
+		},function(){
+			$('#leftBtn,#rightBtn').hide();
+			clearInterval(timer);
+			timer = setInterval(fnTimer,1000);
+		})
+		$('#rightBtn').click(function(e) {
+            thisIndex++;
+			if(thisIndex > 5){
+				thisIndex = 0;
+			}
+			changeImg();
+        });
+		
+		$('#leftBtn').click(function(e) {
+            thisIndex--;
+			if(thisIndex < 0){
+				thisIndex = 5;
+			}
+			changeImg();
+        });
+
+	})
+</script>
+
+</head>
+	
+<body>
+	<div class="all">
+    	<ul>
+        	<li><img src="images/yixun/01.jpg" width="800" height="330" /></li>
+        	<li><img src="images/yixun/02.jpg" width="800" height="330" /></li>
+        	<li><img src="images/yixun/03.jpg" width="800" height="330" /></li>
+        	<li><img src="images/yixun/04.jpg" width="800" height="330" /></li>
+        	<li><img src="images/yixun/05.jpg" width="800" height="330" /></li>
+        	<li><img src="images/yixun/06.jpg" width="800" height="330" /></li>
+        </ul>
+        <ol>
+        	<li class="current">1</li>
+        	<li>2</li>
+        	<li>3</li>
+        	<li>4</li>
+        	<li>5</li>
+        	<li>6</li>
+        </ol>
+        <button id="leftBtn"></button>
+        <button id="rightBtn"></button>
+    </div>
+</body>
+</html>
